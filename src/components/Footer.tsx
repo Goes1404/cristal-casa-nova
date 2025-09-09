@@ -31,7 +31,7 @@ const Footer = () => {
             <p className="text-primary-foreground/80 leading-relaxed mb-6 max-w-md">
              Minha missão é realizar seus sonhos imobiliários com transparência e segurança,
              seja encontrando o lar perfeito ou garantindo a melhor negociação para seu patrimônio.
-            
+            </p>
 
             {/* Social Links */}
             <div className="flex space-x-4">
