@@ -29,9 +29,11 @@ const Footer = () => {
             </div>
             
             <p className="text-primary-foreground/80 leading-relaxed mb-6 max-w-md">
-              Eu sou a Cristal, sua corretora de imóveis. Com anos de experiência no mercado, meu objetivo é simples: tornar sua jornada imobiliária uma experiência transparente, segura e, acima de tudo, realizada. Eu me dedico a entender seus sonhos e 
-              necessidades para encontrar o imóvel perfeito para você ou para garantir a melhor negociação para o seu patrimônio.
-            </p>
+            Eu sou a Cristal, sua corretora de imóveis. Com anos de experiência no mercado, minha missão é tornar sua jornada imobiliária uma experiência transparente,
+            segura e bem-sucedida. Dedico-me a compreender seus sonhos 
+            e necessidades para encontrar o imóvel perfeito para você ou para garantir a negociação mais vantajosa para o seu patrimônio.  </>
+            
+            
 
             {/* Social Links */}
             <div className="flex space-x-4">
@@ -80,10 +82,10 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <div>
                   <a 
-                    href="tel:+5511999999999"
+                    href="tel:+5511996188216"
                     className="text-primary-foreground/80 hover:text-white transition-colors"
                   >
-                    (11) 99999-9999
+                    (11) 99618-8216
                   </a>
                 </div>
               </div>
@@ -92,10 +94,10 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <div>
                   <a 
-                    href="mailto:contato@corretoracristal.com.br"
+                    href="mailto:sq1brunaleite@gmail.com"
                     className="text-primary-foreground/80 hover:text-white transition-colors"
                   >
-                    contato@corretoracristal.com.br
+                    sq1brunaleite@gmail.com
                   </a>
                 </div>
               </div>
@@ -103,8 +105,9 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0 mt-1" />
                 <div className="text-primary-foreground/80">
-                  Av. Paulista, 1000<br />
-                  São Paulo - SP
+                  Calçada Antares, 264 - 2° Andar<br />
+                  Alphaville, Santana de Parnaíba - SP<br />
+                  CEP: 06654-450
                 </div>
               </div>
             </div>
@@ -115,7 +118,7 @@ const Footer = () => {
         <div className="border-t border-white/10 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-primary-foreground/60 text-sm">
-              © 2024 Corretora Cristal. Todos os direitos reservados.
+              © 2025 Corretora Cristal. Todos os direitos reservados.
             </div>
             
             <div className="flex space-x-6 text-sm">
