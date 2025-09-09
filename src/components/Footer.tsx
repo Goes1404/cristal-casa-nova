@@ -29,8 +29,7 @@ const Footer = () => {
             </div>
             
             <p className="text-primary-foreground/80 leading-relaxed mb-6 max-w-md">
-             Minha missão é realizar seus sonhos imobiliários com transparência e segurança,
-             seja encontrando o lar perfeito ou garantindo a melhor negociação para seu patrimônio.
+              Assessoria imobiliária focada em seus objetivos. Garanto segurança, transparência e os melhores resultados para você e seu patrimônio.
             </p>
 
             {/* Social Links */}
