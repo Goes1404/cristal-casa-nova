@@ -57,6 +57,36 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Crystal-specific colors
+        crystal: {
+          primary: "hsl(var(--crystal-primary))",
+          "primary-light": "hsl(var(--crystal-primary-light))",
+          secondary: "hsl(var(--crystal-secondary))",
+          accent: "hsl(var(--crystal-accent))",
+          white: "hsl(var(--crystal-white))",
+          light: "hsl(var(--crystal-light))",
+          gray: "hsl(var(--crystal-gray))",
+          dark: "hsl(var(--crystal-dark))",
+        },
+      },
+      backgroundImage: {
+        'gradient-hero': 'var(--gradient-hero)',
+        'gradient-card': 'var(--gradient-card)',
+        'gradient-accent': 'var(--gradient-accent)',
+      },
+      boxShadow: {
+        'soft': 'var(--shadow-soft)',
+        'medium': 'var(--shadow-medium)',
+        'strong': 'var(--shadow-strong)',
+        'glow': 'var(--shadow-glow)',
+      },
+      transitionTimingFunction: {
+        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'spring': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      },
+      fontFamily: {
+        'heading': ['Montserrat', 'system-ui', 'sans-serif'],
+        'body': ['Lato', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
