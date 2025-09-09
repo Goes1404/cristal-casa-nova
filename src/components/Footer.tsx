@@ -29,8 +29,8 @@ const Footer = () => {
             </div>
             
             <p className="text-primary-foreground/80 leading-relaxed mb-6 max-w-md">
-              Há mais de 15 anos conectando pessoas aos seus lares ideais. 
-              Transparência, confiança e excelência em cada negociação.
+              Eu sou a Cristal, sua corretora de imóveis. Com anos de experiência no mercado, meu objetivo é simples: tornar sua jornada imobiliária uma experiência transparente, segura e, acima de tudo, realizada. Eu me dedico a entender seus sonhos e 
+              necessidades para encontrar o imóvel perfeito para você ou para garantir a melhor negociação para o seu patrimônio.
             </p>
 
             {/* Social Links */}
