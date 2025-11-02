@@ -52,11 +52,7 @@ const AboutSection = () => {
                   de imóveis, a Corretora Cristal nasceu da paixão por conectar pessoas aos 
                   seus lares ideais.
                 </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Com mais de 15 anos de experiência no mercado imobiliário, desenvolvemos 
-                  uma abordagem única que combina expertise técnica, atendimento humanizado 
-                  e total transparência em cada transação.
-                </p>
+                <p className="text-muted-foreground leading-relaxed">Com mais de 7 anos de experiência no mercado imobiliário, desenvolvemos uma abordagem única que combina expertise técnica, atendimento humanizado e total transparência em cada transação.</p>
               </div>
 
               <div className="space-y-4">
