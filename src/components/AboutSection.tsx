@@ -1,32 +1,24 @@
 import { Shield, Heart, Award, Users } from 'lucide-react';
 import agentImage from '@/assets/agent-portrait.jpg';
-
 const AboutSection = () => {
-  const values = [
-    {
-      icon: Shield,
-      title: 'Confiança',
-      description: 'Transparência total em todas as negociações'
-    },
-    {
-      icon: Heart,
-      title: 'Atendimento Personalizado',
-      description: 'Cada cliente é único e merece atenção especial'
-    },
-    {
-      icon: Award,
-      title: 'Excelência',
-      description: 'Padrão de qualidade reconhecido no mercado'
-    },
-    {
-      icon: Users,
-      title: 'Experiência',
-      description: 'Mais de 15 anos conectando pessoas aos seus lares'
-    }
-  ];
-
-  return (
-    <section id="about" className="py-20 bg-gradient-to-b from-white to-muted">
+  const values = [{
+    icon: Shield,
+    title: 'Confiança',
+    description: 'Transparência total em todas as negociações'
+  }, {
+    icon: Heart,
+    title: 'Atendimento Personalizado',
+    description: 'Cada cliente é único e merece atenção especial'
+  }, {
+    icon: Award,
+    title: 'Excelência',
+    description: 'Padrão de qualidade reconhecido no mercado'
+  }, {
+    icon: Users,
+    title: 'Experiência',
+    description: 'Mais de 15 anos conectando pessoas aos seus lares'
+  }];
+  return <section id="about" className="py-20 bg-gradient-to-b from-white to-muted">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -41,14 +33,10 @@ const AboutSection = () => {
             {/* Image */}
             <div className="relative">
               <div className="aspect-square rounded-2xl overflow-hidden shadow-strong">
-                <img 
-                  src={agentImage} 
-                  alt="Corretora Cristal - Atendimento Profissional"
-                  className="w-full h-full object-cover"
-                />
+                <img src={agentImage} alt="Corretora Cristal - Atendimento Profissional" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -right-6 bg-gradient-accent text-white p-6 rounded-xl shadow-glow">
-                <div className="text-2xl font-bold">15+</div>
+                <div className="text-2xl font-bold">7+</div>
                 <div className="text-sm opacity-90">Anos no Mercado</div>
               </div>
             </div>
@@ -91,9 +79,8 @@ const AboutSection = () => {
           {/* Values Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <div key={index} className="card-crystal text-center group">
+            const Icon = value.icon;
+            return <div key={index} className="card-crystal text-center group">
                   <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
@@ -103,14 +90,11 @@ const AboutSection = () => {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {value.description}
                   </p>
-                </div>
-              );
-            })}
+                </div>;
+          })}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default AboutSection;
