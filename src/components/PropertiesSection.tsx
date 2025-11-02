@@ -1,47 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import PropertyCard from './PropertyCard';
-import apartmentImage from '@/assets/property-apartment.jpg';
-import houseImage from '@/assets/property-house.jpg';
-import penthouseImage from '@/assets/property-penthouse.jpg';
+import { Loader2 } from 'lucide-react';
 
 const PropertiesSection = () => {
-  const properties = [
-    {
-      id: 1,
-      image: apartmentImage,
-      type: 'Apartamento',
-      title: 'Apartamento Luxuoso no Centro',
-      location: 'Centro, São Paulo - SP',
-      bedrooms: 3,
-      bathrooms: 2,
-      parking: 2,
-      area: 120,
-      price: 'R$ 850.000'
-    },
-    {
-      id: 2,
-      image: houseImage,
-      type: 'Casa',
-      title: 'Casa Moderna em Condomínio',
-      location: 'Alphaville, Barueri - SP',
-      bedrooms: 4,
-      bathrooms: 3,
-      parking: 3,
-      area: 280,
-      price: 'R$ 1.200.000'
-    },
-    {
-      id: 3,
-      image: penthouseImage,
-      type: 'Cobertura',
-      title: 'Penthouse com Vista Panorâmica',
-      location: 'Vila Olímpia, São Paulo - SP',
-      bedrooms: 5,
-      bathrooms: 4,
-      parking: 4,
-      area: 350,
-      price: 'R$ 2.500.000'
+  const { data: properties, isLoading } = useQuery({
+    queryKey: ['properties'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('properties')
+        .select(`
+          *,
+          property_images (
+            image_url,
+            is_primary
+          )
+        `)
+        .eq('status', 'disponivel')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (error) throw error;
+      return data;
     }
-  ];
+  });
 
   return (
     <section id="properties" className="py-20 bg-white">
@@ -57,11 +39,44 @@ const PropertiesSection = () => {
           </div>
 
           {/* Properties Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {properties.map((property) => (
-              <PropertyCard key={property.id} {...property} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : properties && properties.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {properties.map((property) => {
+                const primaryImage = property.property_images.find(img => img.is_primary)?.image_url;
+                const typeMap: Record<string, string> = {
+                  'apartamento': 'Apartamento',
+                  'casa': 'Casa',
+                  'cobertura': 'Cobertura',
+                  'terreno': 'Terreno',
+                  'comercial': 'Comercial'
+                };
+                
+                return (
+                  <PropertyCard
+                    key={property.id}
+                    id={property.id}
+                    image={primaryImage || ''}
+                    type={typeMap[property.type] || property.type}
+                    title={property.title}
+                    location={property.location}
+                    bedrooms={property.bedrooms}
+                    bathrooms={property.bathrooms}
+                    parking={property.parking}
+                    area={property.area}
+                    price={`R$ ${Number(property.price).toLocaleString('pt-BR')}`}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-muted-foreground">
+              <p>Nenhum imóvel disponível no momento.</p>
+            </div>
+          )}
 
           {/* View All Button */}
           <div className="text-center">

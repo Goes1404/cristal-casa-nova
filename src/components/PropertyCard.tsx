@@ -1,7 +1,7 @@
 import { Bed, Bath, Car, Square, MapPin, Eye } from 'lucide-react';
 
 interface PropertyCardProps {
-  id: number;
+  id: string | number;
   image: string;
   type: string;
   title: string;
