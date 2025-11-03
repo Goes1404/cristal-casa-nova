@@ -209,3 +209,9 @@ CREATE TRIGGER update_properties_updated_at
   BEFORE UPDATE ON public.properties
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at();
+
+
+-- Seed: torna um usuário admin (substitua pelo UUID real do usuário)
+INSERT INTO public.user_roles (user_id, role)
+VALUES ('UUID_DO_USUARIO', 'admin')
+ON CONFLICT (user_id, role) DO NOTHING;
