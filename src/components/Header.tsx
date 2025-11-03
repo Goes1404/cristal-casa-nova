@@ -1,11 +1,12 @@
+// src/components/Header.jsx
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Home, Building, Users, Phone, UserCircle } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import useAuth from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, loading } = useAuth();
 
   const navigation = [
     { name: 'Início', href: '#home', icon: Home },
@@ -39,13 +40,17 @@ const Header = () => {
                 {item.name}
               </a>
             ))}
-            {isAdmin && (
+
+            {/* Mostrar Admin somente quando isAdmin === true */}
+            {isAdmin === true && (
               <Link to="/admin" className="btn-hero flex items-center gap-2 px-4 py-2">
                 <UserCircle className="h-4 w-4" />
                 <span>Admin</span>
               </Link>
             )}
-            {!user && (
+
+            {/* Mostrar botão Entrar quando não há usuário */}
+            {!user && !loading && (
               <Link to="/auth" className="btn-hero flex items-center gap-2 px-4 py-2">
                 <UserCircle className="h-4 w-4" />
                 <span>Entrar</span>
@@ -57,6 +62,7 @@ const Header = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Toggle menu"
           >
             {isMenuOpen ? (
               <X className="w-6 h-6 text-primary" />
@@ -84,7 +90,8 @@ const Header = () => {
                   </a>
                 );
               })}
-              {isAdmin && (
+
+              {isAdmin === true && (
                 <Link
                   to="/admin"
                   onClick={() => setIsMenuOpen(false)}
@@ -94,7 +101,8 @@ const Header = () => {
                   <span>Admin</span>
                 </Link>
               )}
-              {!user && (
+
+              {!user && !loading && (
                 <Link
                   to="/auth"
                   onClick={() => setIsMenuOpen(false)}

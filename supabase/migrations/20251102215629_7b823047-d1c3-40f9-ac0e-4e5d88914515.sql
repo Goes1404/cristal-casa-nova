@@ -219,3 +219,9 @@ ON CONFLICT (user_id, role) DO NOTHING;
 
 ALTER TABLE public.properties
   ADD COLUMN IF NOT EXISTS is_featured BOOLEAN NOT NULL DEFAULT FALSE;
+
+-- Permitir que cada usuário leia apenas os próprios roles
+CREATE POLICY "Users can view their own roles"
+  ON public.user_roles FOR SELECT
+  TO authenticated
+  USING (user_id = auth.uid());
