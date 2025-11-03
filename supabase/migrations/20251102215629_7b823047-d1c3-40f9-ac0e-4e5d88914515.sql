@@ -215,3 +215,7 @@ CREATE TRIGGER update_properties_updated_at
 INSERT INTO public.user_roles (user_id, role)
 VALUES ('UUID_DO_USUARIO', 'admin')
 ON CONFLICT (user_id, role) DO NOTHING;
+
+
+ALTER TABLE public.properties
+  ADD COLUMN IF NOT EXISTS is_featured BOOLEAN NOT NULL DEFAULT FALSE;
