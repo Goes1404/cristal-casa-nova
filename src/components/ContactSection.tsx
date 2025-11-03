@@ -28,22 +28,22 @@ const ContactSection = () => {
   const contactInfo = [{
     icon: Phone,
     title: 'Telefone',
-    info: '(11) 99999-9999',
-    link: 'tel:+5511999999999'
+    info: '(11) 99618-8216',
+    link: 'tel: 5511996188216'
   }, {
     icon: MessageCircle,
     title: 'WhatsApp',
-    info: '(11) 99999-9999',
-    link: 'https://wa.me/5511999999999'
+    info: '(11) 99618-8216',
+    link: 'https://wa.me/5511996188216'
   }, {
     icon: Mail,
     title: 'E-mail',
-    info: 'contato@corretoracristal.com.br',
-    link: 'mailto:contato@corretoracristal.com.br'
+    info: 'sq1brunaleite@gmail.com.br',
+    link: 'mailto:sq1brunaleite@gmail.com.br'
   }, {
     icon: MapPin,
     title: 'Endereço',
-    info: 'Av. Paulista, 1000 - São Paulo',
+    info: 'Calçada Antares, 264, Segundo Andar, Alphaville, Santana de Parnaíba, SP, Brasil',
     link: '#'
   }];
   return <section id="contact" className="py-20 bg-gradient-to-b from-muted to-white">
