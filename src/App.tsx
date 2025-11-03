@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import PropertyList from "./pages/PropertyList";
 import PropertyForm from "./pages/PropertyForm";
+import AdminNewProperty from "./pages/AdminNewProperty";
 
 const queryClient = new QueryClient();
 
