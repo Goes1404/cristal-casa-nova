@@ -1,4 +1,5 @@
-import { Instagram, Facebook, Mail, Phone, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Mail, Phone, MapPin, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const socialLinks = [
@@ -66,6 +67,15 @@ const Footer = () => {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link 
+                  to="/auth"
+                  className="flex items-center gap-2 text-primary-foreground/80 hover:text-white transition-colors"
+                >
+                  <Lock className="w-4 h-4" />
+                  Área Administrativa
+                </Link>
+              </li>
             </ul>
           </div>
 
