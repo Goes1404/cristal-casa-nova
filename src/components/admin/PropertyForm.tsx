@@ -27,33 +27,41 @@ type PropertyFormData = z.infer<typeof propertySchema>;
 
 const PropertyForm = () => {
   const [loading, setLoading] = useState(false);
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema)
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setImageFiles(prev => [...prev, ...files]);
+      
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setImagePreviews(prev => [...prev, reader.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
     }
   };
 
-  const clearImage = () => {
-    setImageFile(null);
-    setImagePreview(null);
+  const removeImage = (index: number) => {
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const clearImages = () => {
+    setImageFiles([]);
+    setImagePreviews([]);
   };
 
   const onSubmit = async (data: PropertyFormData) => {
-    if (!imageFile) {
-      toast.error('Por favor, adicione uma imagem');
+    if (imageFiles.length === 0) {
+      toast.error('Por favor, adicione pelo menos uma imagem');
       return;
     }
 
@@ -61,19 +69,6 @@ const PropertyForm = () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
-
-      // Upload image
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${Math.random()}.${fileExt}`;
-      const { error: uploadError, data: uploadData } = await supabase.storage
-        .from('property-images')
-        .upload(fileName, imageFile);
-
-      if (uploadError) throw uploadError;
-
-      const imageUrl = supabase.storage
-        .from('property-images')
-        .getPublicUrl(fileName).data.publicUrl;
 
       // Insert property
       const { data: property, error: propertyError } = await supabase
@@ -95,21 +90,40 @@ const PropertyForm = () => {
 
       if (propertyError) throw propertyError;
 
-      // Insert image
-      const { error: imageError } = await supabase
-        .from('property_images')
-        .insert({
+      // Upload all images
+      const imageUploads = imageFiles.map(async (file, index) => {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const { error: uploadError } = await supabase.storage
+          .from('property-images')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        const imageUrl = supabase.storage
+          .from('property-images')
+          .getPublicUrl(fileName).data.publicUrl;
+
+        return {
           property_id: property.id,
           image_url: imageUrl,
-          is_primary: true,
-          display_order: 0
-        });
+          is_primary: index === 0,
+          display_order: index
+        };
+      });
+
+      const imageRecords = await Promise.all(imageUploads);
+
+      // Insert all images
+      const { error: imageError } = await supabase
+        .from('property_images')
+        .insert(imageRecords);
 
       if (imageError) throw imageError;
 
       toast.success('Imóvel cadastrado com sucesso!');
       reset();
-      clearImage();
+      clearImages();
     } catch (error: any) {
       toast.error(error.message || 'Erro ao cadastrar imóvel');
     } finally {
@@ -183,28 +197,36 @@ const PropertyForm = () => {
       </div>
 
       <div>
-        <Label>Foto Principal *</Label>
+        <Label>Fotos do Imóvel * (múltiplas)</Label>
         <div className="mt-2 space-y-4">
-          {imagePreview ? (
-            <div className="relative">
-              <img src={imagePreview} alt="Preview" className="w-full h-64 object-cover rounded-lg" />
-              <Button
-                type="button"
-                variant="destructive"
-                size="icon"
-                className="absolute top-2 right-2"
-                onClick={clearImage}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+          {imagePreviews.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="relative">
+                  <img src={preview} alt={`Preview ${index + 1}`} className="w-full h-40 object-cover rounded-lg" />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-2 right-2"
+                    onClick={() => removeImage(index)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                  {index === 0 && (
+                    <span className="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
+                      Principal
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
-          ) : (
-            <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/50 transition-colors">
-              <Upload className="h-12 w-12 text-muted-foreground mb-2" />
-              <span className="text-sm text-muted-foreground">Clique para fazer upload</span>
-              <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
-            </label>
           )}
+          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/50 transition-colors">
+            <Upload className="h-8 w-8 text-muted-foreground mb-2" />
+            <span className="text-sm text-muted-foreground">Clique para adicionar fotos</span>
+            <input type="file" className="hidden" accept="image/*" multiple onChange={handleImageChange} />
+          </label>
         </div>
       </div>
 

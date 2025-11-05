@@ -14,7 +14,8 @@ const PropertyList = () => {
           *,
           property_images (
             image_url,
-            is_primary
+            is_primary,
+            display_order
           )
         `)
         .order('created_at', { ascending: false });

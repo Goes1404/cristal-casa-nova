@@ -13,7 +13,8 @@ const PropertiesSection = () => {
           *,
           property_images (
             image_url,
-            is_primary
+            is_primary,
+            display_order
           )
         `)
         .eq('status', 'disponivel')
@@ -46,7 +47,10 @@ const PropertiesSection = () => {
           ) : properties && properties.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {properties.map((property) => {
-                const primaryImage = property.property_images.find(img => img.is_primary)?.image_url;
+                const sortedImages = [...property.property_images]
+                  .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+                  .map(img => img.image_url);
+                
                 const typeMap: Record<string, string> = {
                   'apartamento': 'Apartamento',
                   'casa': 'Casa',
@@ -59,7 +63,7 @@ const PropertiesSection = () => {
                   <PropertyCard
                     key={property.id}
                     id={property.id}
-                    image={primaryImage || ''}
+                    images={sortedImages}
                     type={typeMap[property.type] || property.type}
                     title={property.title}
                     location={property.location}

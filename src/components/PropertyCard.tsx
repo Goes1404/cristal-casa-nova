@@ -1,8 +1,9 @@
 import { Bed, Bath, Car, Square, MapPin, Eye } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 interface PropertyCardProps {
   id: string | number;
-  image: string;
+  images: string[];
   type: string;
   title: string;
   location: string;
@@ -14,7 +15,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ 
-  image, 
+  images, 
   type, 
   title, 
   location, 
@@ -26,19 +27,37 @@ const PropertyCard = ({
 }: PropertyCardProps) => {
   return (
     <div className="card-property group">
-      {/* Image */}
+      {/* Image Carousel */}
       <div className="relative overflow-hidden">
-        <img 
-          src={image} 
-          alt={title}
-          className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-        />
-        <div className="absolute top-4 left-4">
+        {images.length > 1 ? (
+          <Carousel className="w-full">
+            <CarouselContent>
+              {images.map((image, index) => (
+                <CarouselItem key={index}>
+                  <img 
+                    src={image} 
+                    alt={`${title} - Foto ${index + 1}`}
+                    className="w-full h-64 object-cover"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-2" />
+            <CarouselNext className="right-2" />
+          </Carousel>
+        ) : (
+          <img 
+            src={images[0] || ''} 
+            alt={title}
+            className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
+        <div className="absolute top-4 left-4 z-10">
           <span className="bg-gradient-accent text-white px-3 py-1 rounded-full text-sm font-medium">
             {type}
           </span>
         </div>
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-10">
           <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
             <Eye className="w-5 h-5" />
           </button>
