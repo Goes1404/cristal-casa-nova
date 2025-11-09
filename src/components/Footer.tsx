@@ -1,17 +1,33 @@
 import { Instagram, Facebook, Mail, Phone, MapPin, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (href: string) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.getElementById(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const socialLinks = [
     { icon: Instagram, href: '#', label: 'Instagram' },
     { icon: Facebook, href: '#', label: 'Facebook' }
   ];
 
   const quickLinks = [
-    { name: 'Início', href: '#home' },
-    { name: 'Imóveis', href: '#properties' },
-    { name: 'Sobre Nós', href: '#about' },
-    { name: 'Contato', href: '#contact' }
+    { name: 'Início', href: 'home' },
+    { name: 'Imóveis', href: 'properties' },
+    { name: 'Sobre Nós', href: 'about' },
+    { name: 'Contato', href: 'contact' }
   ];
 
   return (
@@ -59,12 +75,12 @@ const Footer = () => {
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a 
-                    href={link.href}
-                    className="text-primary-foreground/80 hover:text-white transition-colors"
+                  <button 
+                    onClick={() => handleNavClick(link.href)}
+                    className="text-primary-foreground/80 hover:text-white transition-colors text-left"
                   >
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
               <li>

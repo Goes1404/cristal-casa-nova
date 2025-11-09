@@ -1,19 +1,38 @@
 // src/components/Header.jsx
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Home, Building, Users, Phone, UserCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, isAdmin, loading } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigation = [
-    { name: 'Início', href: '#home', icon: Home },
-    { name: 'Imóveis', href: '#properties', icon: Building },
-    { name: 'Sobre Nós', href: '#about', icon: Users },
-    { name: 'Contato', href: '#contact', icon: Phone },
+    { name: 'Início', href: 'home', icon: Home },
+    { name: 'Imóveis', href: 'properties', icon: Building },
+    { name: 'Sobre Nós', href: 'about', icon: Users },
+    { name: 'Contato', href: 'contact', icon: Phone },
   ];
+
+  const handleNavClick = (href: string) => {
+    setIsMenuOpen(false);
+    
+    if (location.pathname !== '/') {
+      // Se não está na home, navega para home e depois faz scroll
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(href);
+        element?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      // Se já está na home, só faz scroll
+      const element = document.getElementById(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-soft">
@@ -32,13 +51,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
             {navigation.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href={item.href}
+                onClick={() => handleNavClick(item.href)}
                 className="text-crystal-gray hover:text-primary transition-colors duration-300 font-medium"
               >
                 {item.name}
-              </a>
+              </button>
             ))}
 
             {/* Mostrar Admin somente quando isAdmin === true */}
@@ -79,15 +98,14 @@ const Header = () => {
               {navigation.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <a
+                  <button
                     key={item.name}
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center space-x-3 text-crystal-gray hover:text-primary transition-colors duration-300 font-medium py-2"
+                    onClick={() => handleNavClick(item.href)}
+                    className="flex items-center space-x-3 text-crystal-gray hover:text-primary transition-colors duration-300 font-medium py-2 text-left"
                   >
                     <Icon className="w-5 h-5" />
                     <span>{item.name}</span>
-                  </a>
+                  </button>
                 );
               })}
 
