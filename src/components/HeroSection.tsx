@@ -32,12 +32,18 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-hero inline-flex items-center space-x-2">
+            <button 
+              onClick={() => document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-hero inline-flex items-center space-x-2"
+            >
               <span>Ver Imóveis em Destaque</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             
-            <button className="btn-outline text-white border-white hover:bg-white hover:text-primary">
+            <button 
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-outline text-white border-white hover:bg-white hover:text-primary"
+            >
               Fale Conosco
             </button>
           </div>

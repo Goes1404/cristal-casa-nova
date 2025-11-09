@@ -1,5 +1,6 @@
 import { Bed, Bath, Car, Square, MapPin, Eye } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
+import { useNavigate } from 'react-router-dom';
 
 interface PropertyCardProps {
   id: string | number;
@@ -15,6 +16,7 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ 
+  id,
   images, 
   type, 
   title, 
@@ -25,8 +27,13 @@ const PropertyCard = ({
   area, 
   price 
 }: PropertyCardProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="card-property group">
+    <div 
+      onClick={() => navigate(`/property/${id}`)}
+      className="card-property group cursor-pointer"
+    >
       {/* Image Carousel */}
       <div className="relative overflow-hidden">
         {images.length > 1 ? (

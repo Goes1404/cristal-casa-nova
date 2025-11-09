@@ -10,6 +10,8 @@ import Admin from "./pages/Admin";
 import PropertyList from "./pages/PropertyList";
 import PropertyForm from "./pages/PropertyForm";
 import AdminNewProperty from "./pages/AdminNewProperty";
+import Properties from "./pages/Properties";
+import PropertyDetail from "./pages/PropertyDetail";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +25,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/properties" element={<PropertyList />} />
+          <Route path="/properties" element={<Properties />} />
+          <Route path="/property/:id" element={<PropertyDetail />} />
           <Route path="/properties/new" element={<PropertyForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

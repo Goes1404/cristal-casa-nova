@@ -84,9 +84,9 @@ const PropertiesSection = () => {
 
           {/* View All Button */}
           <div className="text-center">
-            <button className="btn-hero">
+            <a href="/properties" className="btn-hero inline-block">
               Ver Todos os Imóveis
-            </button>
+            </a>
           </div>
         </div>
       </div>
