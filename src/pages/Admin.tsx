@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ import PropertyList from '@/components/admin/PropertyList';
 const Admin = () => {
   const navigate = useNavigate();
   const { user, loading, isAdmin, signOut } = useAuth();
+  const [editingPropertyId, setEditingPropertyId] = useState<string | undefined>();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -21,6 +22,16 @@ const Admin = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
+  };
+
+  const handleEdit = (propertyId: string) => {
+    setEditingPropertyId(propertyId);
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSuccess = () => {
+    setEditingPropertyId(undefined);
   };
 
   if (loading) {
@@ -61,9 +72,18 @@ const Admin = () => {
           <div className="bg-card border border-border rounded-lg p-6">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
               <Plus className="h-6 w-6" />
-              Adicionar Novo Imóvel
+              {editingPropertyId ? 'Editar Imóvel' : 'Adicionar Novo Imóvel'}
             </h2>
-            <PropertyForm />
+            {editingPropertyId && (
+              <Button 
+                variant="outline" 
+                onClick={() => setEditingPropertyId(undefined)}
+                className="mb-4"
+              >
+                Cancelar Edição
+              </Button>
+            )}
+            <PropertyForm propertyId={editingPropertyId} onSuccess={handleSuccess} />
           </div>
 
           {/* Properties List */}
@@ -71,7 +91,7 @@ const Admin = () => {
             <h2 className="text-2xl font-bold mb-6">
               Imóveis Cadastrados
             </h2>
-            <PropertyList />
+            <PropertyList onEdit={handleEdit} />
           </div>
         </div>
       </main>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,27 +12,76 @@ import { toast } from 'sonner';
 import { Loader2, Upload, X } from 'lucide-react';
 
 const propertySchema = z.object({
-  title: z.string().min(3, 'Título deve ter no mínimo 3 caracteres'),
+  title: z.string().optional(),
   description: z.string().optional(),
-  type: z.enum(['apartamento', 'casa', 'cobertura', 'terreno', 'comercial']),
-  location: z.string().min(3, 'Localização obrigatória'),
-  price: z.number().positive('Preço deve ser positivo'),
-  bedrooms: z.number().int().nonnegative(),
-  bathrooms: z.number().int().nonnegative(),
-  parking: z.number().int().nonnegative(),
-  area: z.number().positive('Área deve ser positiva')
+  type: z.enum(['apartamento', 'casa', 'cobertura', 'terreno', 'comercial']).optional(),
+  location: z.string().optional(),
+  price: z.string().optional(),
+  bedrooms: z.string().optional(),
+  bathrooms: z.string().optional(),
+  parking: z.string().optional(),
+  area: z.string().optional()
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
 
-const PropertyForm = () => {
+interface PropertyFormProps {
+  propertyId?: string;
+  onSuccess?: () => void;
+}
+
+const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
   const [loading, setLoading] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [existingImages, setExistingImages] = useState<any[]>([]);
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema)
   });
+
+  // Load property data if editing
+  useEffect(() => {
+    const loadPropertyData = async () => {
+      if (!propertyId) return;
+      
+      try {
+        const { data: property, error } = await supabase
+          .from('properties')
+          .select(`
+            *,
+            property_images (
+              id,
+              image_url,
+              is_primary,
+              display_order
+            )
+          `)
+          .eq('id', propertyId)
+          .single();
+
+        if (error) throw error;
+
+        // Set form values
+        setValue('title', property.title || '');
+        setValue('description', property.description || '');
+        setValue('type', property.type);
+        setValue('location', property.location || '');
+        setValue('price', property.price?.toString() || '');
+        setValue('bedrooms', property.bedrooms?.toString() || '');
+        setValue('bathrooms', property.bathrooms?.toString() || '');
+        setValue('parking', property.parking?.toString() || '');
+        setValue('area', property.area?.toString() || '');
+
+        // Set existing images
+        setExistingImages(property.property_images || []);
+      } catch (error: any) {
+        toast.error('Erro ao carregar imóvel');
+      }
+    };
+
+    loadPropertyData();
+  }, [propertyId, setValue]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -54,13 +103,28 @@ const PropertyForm = () => {
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
+  const removeExistingImage = async (imageId: string) => {
+    try {
+      const { error } = await supabase
+        .from('property_images')
+        .delete()
+        .eq('id', imageId);
+
+      if (error) throw error;
+      setExistingImages(prev => prev.filter(img => img.id !== imageId));
+      toast.success('Imagem removida');
+    } catch (error: any) {
+      toast.error('Erro ao remover imagem');
+    }
+  };
+
   const clearImages = () => {
     setImageFiles([]);
     setImagePreviews([]);
   };
 
   const onSubmit = async (data: PropertyFormData) => {
-    if (imageFiles.length === 0) {
+    if (!propertyId && imageFiles.length === 0 && existingImages.length === 0) {
       toast.error('Por favor, adicione pelo menos uma imagem');
       return;
     }
@@ -70,25 +134,43 @@ const PropertyForm = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
-      // Insert property
-      const { data: property, error: propertyError } = await supabase
-        .from('properties')
-        .insert([{
-          title: data.title,
-          description: data.description || null,
-          type: data.type,
-          location: data.location,
-          price: data.price,
-          bedrooms: data.bedrooms,
-          bathrooms: data.bathrooms,
-          parking: data.parking,
-          area: data.area,
-          user_id: user.id
-        }])
-        .select()
-        .single();
+      const payload = {
+        title: data.title || null,
+        description: data.description || null,
+        type: data.type || 'apartamento',
+        location: data.location || null,
+        price: data.price ? parseFloat(data.price) : null,
+        bedrooms: data.bedrooms ? parseInt(data.bedrooms) : null,
+        bathrooms: data.bathrooms ? parseInt(data.bathrooms) : null,
+        parking: data.parking ? parseInt(data.parking) : null,
+        area: data.area ? parseFloat(data.area) : null,
+        user_id: user.id
+      };
 
-      if (propertyError) throw propertyError;
+      let property;
+
+      if (propertyId) {
+        // Update existing property
+        const { data: updatedProperty, error: propertyError } = await supabase
+          .from('properties')
+          .update(payload)
+          .eq('id', propertyId)
+          .select()
+          .single();
+
+        if (propertyError) throw propertyError;
+        property = updatedProperty;
+      } else {
+        // Insert new property
+        const { data: newProperty, error: propertyError } = await supabase
+          .from('properties')
+          .insert([payload])
+          .select()
+          .single();
+
+        if (propertyError) throw propertyError;
+        property = newProperty;
+      }
 
       // Upload all images
       const imageUploads = imageFiles.map(async (file, index) => {
@@ -121,11 +203,17 @@ const PropertyForm = () => {
 
       if (imageError) throw imageError;
 
-      toast.success('Imóvel cadastrado com sucesso!');
-      reset();
-      clearImages();
+      const successMessage = propertyId ? 'Imóvel atualizado com sucesso!' : 'Imóvel cadastrado com sucesso!';
+      toast.success(successMessage);
+      
+      if (!propertyId) {
+        reset();
+        clearImages();
+      }
+      
+      if (onSuccess) onSuccess();
     } catch (error: any) {
-      toast.error(error.message || 'Erro ao cadastrar imóvel');
+      toast.error(error.message || 'Erro ao salvar imóvel');
     } finally {
       setLoading(false);
     }
@@ -135,13 +223,12 @@ const PropertyForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="title">Título *</Label>
+          <Label htmlFor="title">Título</Label>
           <Input id="title" {...register('title')} />
-          {errors.title && <p className="text-sm text-destructive mt-1">{errors.title.message}</p>}
         </div>
 
         <div>
-          <Label htmlFor="type">Tipo *</Label>
+          <Label htmlFor="type">Tipo</Label>
           <Select onValueChange={(value) => setValue('type', value as any)}>
             <SelectTrigger>
               <SelectValue placeholder="Selecione o tipo" />
@@ -154,40 +241,36 @@ const PropertyForm = () => {
               <SelectItem value="comercial">Comercial</SelectItem>
             </SelectContent>
           </Select>
-          {errors.type && <p className="text-sm text-destructive mt-1">{errors.type.message}</p>}
         </div>
 
         <div>
-          <Label htmlFor="location">Localização *</Label>
+          <Label htmlFor="location">Localização</Label>
           <Input id="location" {...register('location')} />
-          {errors.location && <p className="text-sm text-destructive mt-1">{errors.location.message}</p>}
         </div>
 
         <div>
-          <Label htmlFor="price">Preço (R$) *</Label>
-          <Input id="price" type="number" step="0.01" {...register('price', { valueAsNumber: true })} />
-          {errors.price && <p className="text-sm text-destructive mt-1">{errors.price.message}</p>}
+          <Label htmlFor="price">Preço (R$)</Label>
+          <Input id="price" {...register('price')} />
         </div>
 
         <div>
           <Label htmlFor="bedrooms">Quartos</Label>
-          <Input id="bedrooms" type="number" {...register('bedrooms', { valueAsNumber: true })} defaultValue={0} />
+          <Input id="bedrooms" {...register('bedrooms')} />
         </div>
 
         <div>
           <Label htmlFor="bathrooms">Banheiros</Label>
-          <Input id="bathrooms" type="number" {...register('bathrooms', { valueAsNumber: true })} defaultValue={0} />
+          <Input id="bathrooms" {...register('bathrooms')} />
         </div>
 
         <div>
           <Label htmlFor="parking">Vagas</Label>
-          <Input id="parking" type="number" {...register('parking', { valueAsNumber: true })} defaultValue={0} />
+          <Input id="parking" {...register('parking')} />
         </div>
 
         <div>
-          <Label htmlFor="area">Área (m²) *</Label>
-          <Input id="area" type="number" step="0.01" {...register('area', { valueAsNumber: true })} />
-          {errors.area && <p className="text-sm text-destructive mt-1">{errors.area.message}</p>}
+          <Label htmlFor="area">Área (m²)</Label>
+          <Input id="area" {...register('area')} />
         </div>
       </div>
 
@@ -197,8 +280,31 @@ const PropertyForm = () => {
       </div>
 
       <div>
-        <Label>Fotos do Imóvel * (múltiplas)</Label>
+        <Label>Fotos do Imóvel (múltiplas)</Label>
         <div className="mt-2 space-y-4">
+          {existingImages.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+              {existingImages.map((image) => (
+                <div key={image.id} className="relative">
+                  <img src={image.image_url} alt="Imagem" className="w-full h-40 object-cover rounded-lg" />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-2 right-2"
+                    onClick={() => removeExistingImage(image.id)}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                  {image.is_primary && (
+                    <span className="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
+                      Principal
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
           {imagePreviews.length > 0 && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
               {imagePreviews.map((preview, index) => (
@@ -213,7 +319,7 @@ const PropertyForm = () => {
                   >
                     <X className="h-4 w-4" />
                   </Button>
-                  {index === 0 && (
+                  {index === 0 && existingImages.length === 0 && (
                     <span className="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
                       Principal
                     </span>
@@ -234,10 +340,10 @@ const PropertyForm = () => {
         {loading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Cadastrando...
+            {propertyId ? 'Atualizando...' : 'Cadastrando...'}
           </>
         ) : (
-          'Cadastrar Imóvel'
+          propertyId ? 'Atualizar Imóvel' : 'Cadastrar Imóvel'
         )}
       </Button>
     </form>

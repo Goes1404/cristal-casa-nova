@@ -1,10 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Loader2, Trash2 } from 'lucide-react';
+import { Loader2, Trash2, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 
-const PropertyList = () => {
+interface PropertyListProps {
+  onEdit: (propertyId: string) => void;
+}
+
+const PropertyList = ({ onEdit }: PropertyListProps) => {
   const { data: properties, isLoading, refetch } = useQuery({
     queryKey: ['admin-properties'],
     queryFn: async () => {
@@ -82,13 +86,22 @@ const PropertyList = () => {
                 {property.bedrooms} quartos • {property.bathrooms} banheiros • {property.parking} vagas • {property.area}m²
               </p>
             </div>
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => handleDelete(property.id)}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => onEdit(property.id)}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="destructive"
+                size="icon"
+                onClick={() => handleDelete(property.id)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         );
       })}
