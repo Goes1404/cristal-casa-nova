@@ -124,26 +124,28 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
   };
 
   const onSubmit = async (data: PropertyFormData) => {
-    if (!propertyId && imageFiles.length === 0 && existingImages.length === 0) {
-      toast.error('Por favor, adicione pelo menos uma imagem');
-      return;
-    }
-
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Usuário não autenticado');
 
+      // Parse values - accept any input, try to convert to number if possible
+      const parseNumber = (val: string | undefined) => {
+        if (!val) return 0;
+        const num = parseFloat(val.replace(/[^\d.,]/g, '').replace(',', '.'));
+        return isNaN(num) ? 0 : num;
+      };
+
       const payload = {
-        title: data.title || null,
+        title: data.title || '',
         description: data.description || null,
         type: data.type || 'apartamento',
-        location: data.location || null,
-        price: data.price ? parseFloat(data.price) : null,
-        bedrooms: data.bedrooms ? parseInt(data.bedrooms) : null,
-        bathrooms: data.bathrooms ? parseInt(data.bathrooms) : null,
-        parking: data.parking ? parseInt(data.parking) : null,
-        area: data.area ? parseFloat(data.area) : null,
+        location: data.location || '',
+        price: parseNumber(data.price),
+        bedrooms: Math.floor(parseNumber(data.bedrooms)),
+        bathrooms: Math.floor(parseNumber(data.bathrooms)),
+        parking: Math.floor(parseNumber(data.parking)),
+        area: parseNumber(data.area),
         user_id: user.id
       };
 
