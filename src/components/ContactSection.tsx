@@ -17,16 +17,13 @@ const ContactSection = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     try {
-      const { error } = await supabase
-        .from('contact_messages')
-        .insert([formData]);
-
+      const {
+        error
+      } = await supabase.from('contact_messages').insert([formData]);
       if (error) throw error;
-
       toast.success('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -66,10 +63,8 @@ const ContactSection = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="heading-section">Fale Conosco</h2>
-            <p className="text-lead max-w-2xl mx-auto">
-              Pronto para encontrar seu imóvel ideal? Entre em contato conosco 
-              e transforme seu sonho em realidade.
-            </p>
+            <p className="text-lead max-w-2xl mx-auto">Pronto para encontrar seu imóvel ideal? 
+Entre em contato conosco e transforme seu sonho em realidade.</p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">

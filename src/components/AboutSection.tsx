@@ -48,11 +48,11 @@ const AboutSection = () => {
                   Nossa História
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Fundada com o propósito de revolucionar a experiência de compra e venda 
-                  de imóveis, a Corretora Cristal nasceu da paixão por conectar pessoas aos 
-                  seus lares ideais.
+                  ​Para a Bruna Corretora, cada apólice e cada contrato representam uma história de vida que merece respeito e proteção. Ao longo de 7 anos no mercado, a corretora construiu sua reputação baseada na proximidade com o cliente e na busca constante pelas melhores oportunidades de mercado.
                 </p>
-                <p className="text-muted-foreground leading-relaxed">Com mais de 7 anos de experiência no mercado imobiliário, desenvolvemos uma abordagem única que combina expertise técnica, atendimento humanizado e total transparência em cada transação.</p>
+                <p className="text-muted-foreground leading-relaxed">​Celebrar sete anos de história é a prova de que a dedicação e o olhar atento fazem a diferença. A Bruna Corretora nasceu com o propósito de humanizar o atendimento, oferecendo a segurança de uma estrutura profissional com o cuidado de quem conhece você pelo nome.
+
+Conte com a maturidade de quem já enfrentou diversos desafios do mercado e continua ao seu lado, do planejamento à entrega dos resultados.</p>
               </div>
 
               <div className="space-y-4">
