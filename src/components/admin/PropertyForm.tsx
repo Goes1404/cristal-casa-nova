@@ -9,7 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { Loader2, Upload, X } from 'lucide-react';
+import { Loader2, Upload, X, Star, ChevronUp, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const propertySchema = z.object({
   title: z.string().optional(),
@@ -25,6 +26,13 @@ const propertySchema = z.object({
 
 type PropertyFormData = z.infer<typeof propertySchema>;
 
+interface ImageItem {
+  id: string;
+  image_url: string;
+  is_primary: boolean;
+  display_order: number | null;
+}
+
 interface PropertyFormProps {
   propertyId?: string;
   onSuccess?: () => void;
@@ -34,7 +42,8 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
   const [loading, setLoading] = useState(false);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
-  const [existingImages, setExistingImages] = useState<any[]>([]);
+  const [existingImages, setExistingImages] = useState<ImageItem[]>([]);
+  const [savingOrder, setSavingOrder] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema)
@@ -73,8 +82,10 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         setValue('parking', property.parking?.toString() || '');
         setValue('area', property.area?.toString() || '');
 
-        // Set existing images
-        setExistingImages(property.property_images || []);
+        // Set existing images sorted by display_order
+        const sortedImages = [...(property.property_images || [])]
+          .sort((a, b) => (a.display_order || 0) - (b.display_order || 0));
+        setExistingImages(sortedImages);
       } catch (error: any) {
         toast.error('Erro ao carregar imóvel');
       }
@@ -115,6 +126,72 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
       toast.success('Imagem removida');
     } catch (error: any) {
       toast.error('Erro ao remover imagem');
+    }
+  };
+
+  const moveExistingImage = async (index: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= existingImages.length) return;
+
+    const newImages = [...existingImages];
+    [newImages[index], newImages[newIndex]] = [newImages[newIndex], newImages[index]];
+    
+    // Update display_order for all images
+    const reorderedImages = newImages.map((img, idx) => ({
+      ...img,
+      display_order: idx,
+      is_primary: idx === 0
+    }));
+
+    setExistingImages(reorderedImages);
+    
+    // Save to database
+    setSavingOrder(true);
+    try {
+      for (const img of reorderedImages) {
+        await supabase
+          .from('property_images')
+          .update({ display_order: img.display_order, is_primary: img.is_primary })
+          .eq('id', img.id);
+      }
+      toast.success('Ordem atualizada');
+    } catch (error) {
+      toast.error('Erro ao salvar ordem');
+    } finally {
+      setSavingOrder(false);
+    }
+  };
+
+  const setAsPrimary = async (imageId: string) => {
+    const imageIndex = existingImages.findIndex(img => img.id === imageId);
+    if (imageIndex <= 0) return;
+
+    const newImages = [...existingImages];
+    const [selectedImage] = newImages.splice(imageIndex, 1);
+    newImages.unshift(selectedImage);
+
+    const reorderedImages = newImages.map((img, idx) => ({
+      ...img,
+      display_order: idx,
+      is_primary: idx === 0
+    }));
+
+    setExistingImages(reorderedImages);
+
+    // Save to database
+    setSavingOrder(true);
+    try {
+      for (const img of reorderedImages) {
+        await supabase
+          .from('property_images')
+          .update({ display_order: img.display_order, is_primary: img.is_primary })
+          .eq('id', img.id);
+      }
+      toast.success('Imagem definida como capa');
+    } catch (error) {
+      toast.error('Erro ao definir capa');
+    } finally {
+      setSavingOrder(false);
     }
   };
 
@@ -174,7 +251,8 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         property = newProperty;
       }
 
-      // Upload all images
+      // Upload all new images
+      const startingOrder = existingImages.length;
       const imageUploads = imageFiles.map(async (file, index) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
@@ -191,19 +269,21 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         return {
           property_id: property.id,
           image_url: imageUrl,
-          is_primary: index === 0,
-          display_order: index
+          is_primary: existingImages.length === 0 && index === 0,
+          display_order: startingOrder + index
         };
       });
 
       const imageRecords = await Promise.all(imageUploads);
 
-      // Insert all images
-      const { error: imageError } = await supabase
-        .from('property_images')
-        .insert(imageRecords);
+      // Insert all new images
+      if (imageRecords.length > 0) {
+        const { error: imageError } = await supabase
+          .from('property_images')
+          .insert(imageRecords);
 
-      if (imageError) throw imageError;
+        if (imageError) throw imageError;
+      }
 
       const successMessage = propertyId ? 'Imóvel atualizado com sucesso!' : 'Imóvel cadastrado com sucesso!';
       toast.success(successMessage);
@@ -282,54 +362,127 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
       </div>
 
       <div>
-        <Label>Fotos do Imóvel (múltiplas)</Label>
-        <div className="mt-2 space-y-4">
+        <Label>Fotos do Imóvel</Label>
+        <p className="text-sm text-muted-foreground mb-3">
+          {existingImages.length > 0 
+            ? 'Reordene as imagens usando os botões. A primeira imagem será a capa.'
+            : 'A primeira foto será usada como capa do imóvel.'}
+        </p>
+        
+        <div className="space-y-4">
+          {/* Existing Images with Reorder */}
           {existingImages.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
-              {existingImages.map((image) => (
-                <div key={image.id} className="relative">
-                  <img src={image.image_url} alt="Imagem" className="w-full h-40 object-cover rounded-lg" />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon"
-                    className="absolute top-2 right-2"
-                    onClick={() => removeExistingImage(image.id)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                  {image.is_primary && (
-                    <span className="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
-                      Principal
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {existingImages.map((image, index) => (
+                <div 
+                  key={image.id} 
+                  className={cn(
+                    "relative group rounded-lg overflow-hidden border-2 transition-all aspect-[4/3]",
+                    index === 0 ? "border-primary ring-2 ring-primary/20" : "border-border hover:border-primary/50"
+                  )}
+                >
+                  <img 
+                    src={image.image_url} 
+                    alt={`Imagem ${index + 1}`} 
+                    className="w-full h-full object-cover" 
+                  />
+                  
+                  {/* Controls overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="secondary"
+                      className="h-8 w-8"
+                      onClick={() => moveExistingImage(index, 'up')}
+                      disabled={index === 0 || savingOrder}
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="secondary"
+                      className="h-8 w-8"
+                      onClick={() => moveExistingImage(index, 'down')}
+                      disabled={index === existingImages.length - 1 || savingOrder}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                    {index !== 0 && (
+                      <Button
+                        type="button"
+                        size="icon"
+                        variant="secondary"
+                        className="h-8 w-8"
+                        onClick={() => setAsPrimary(image.id)}
+                        disabled={savingOrder}
+                        title="Definir como capa"
+                      >
+                        <Star className="h-4 w-4" />
+                      </Button>
+                    )}
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="destructive"
+                      className="h-8 w-8"
+                      onClick={() => removeExistingImage(image.id)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  
+                  {/* Primary badge */}
+                  {index === 0 && (
+                    <span className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs flex items-center gap-1">
+                      <Star className="h-3 w-3" />
+                      Capa
                     </span>
                   )}
+                  
+                  {/* Order number */}
+                  <span className="absolute bottom-2 right-2 bg-background/80 text-foreground px-2 py-0.5 rounded text-xs">
+                    {index + 1}
+                  </span>
                 </div>
               ))}
             </div>
           )}
+
+          {/* New Image Previews */}
           {imagePreviews.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {imagePreviews.map((preview, index) => (
-                <div key={index} className="relative">
-                  <img src={preview} alt={`Preview ${index + 1}`} className="w-full h-40 object-cover rounded-lg" />
+                <div key={index} className="relative aspect-[4/3]">
+                  <img 
+                    src={preview} 
+                    alt={`Nova foto ${index + 1}`} 
+                    className="w-full h-full object-cover rounded-lg border-2 border-dashed border-primary/50" 
+                  />
                   <Button
                     type="button"
                     variant="destructive"
                     size="icon"
-                    className="absolute top-2 right-2"
+                    className="absolute top-2 right-2 h-7 w-7"
                     onClick={() => removeImage(index)}
                   >
                     <X className="h-4 w-4" />
                   </Button>
                   {index === 0 && existingImages.length === 0 && (
-                    <span className="absolute bottom-2 left-2 bg-primary text-white px-2 py-1 rounded text-xs">
-                      Principal
+                    <span className="absolute top-2 left-2 bg-primary text-primary-foreground px-2 py-1 rounded text-xs">
+                      Capa
                     </span>
                   )}
+                  <span className="absolute bottom-2 left-2 bg-accent text-accent-foreground px-2 py-0.5 rounded text-xs">
+                    Nova
+                  </span>
                 </div>
               ))}
             </div>
           )}
+
+          {/* Upload Area */}
           <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer bg-muted hover:bg-muted/50 transition-colors">
             <Upload className="h-8 w-8 text-muted-foreground mb-2" />
             <span className="text-sm text-muted-foreground">Clique para adicionar fotos</span>

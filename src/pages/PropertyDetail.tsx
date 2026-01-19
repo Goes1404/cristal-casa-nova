@@ -4,8 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Bed, Bath, Car, Maximize, MapPin, ArrowLeft, Phone, MessageCircle } from 'lucide-react';
+import { Bed, Bath, Car, Maximize, MapPin, ArrowLeft, Phone, MessageCircle, ImageOff } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
+import { formatCurrency, formatCurrencyFull } from '@/lib/formatCurrency';
+
+const PLACEHOLDER_IMAGE = '/placeholder.svg';
 
 const PropertyDetail = () => {
   const { id } = useParams();
@@ -48,9 +51,11 @@ const PropertyDetail = () => {
     );
   }
 
-  const sortedImages = [...property.property_images]
-    .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
-    .map(img => img.image_url);
+  const sortedImages = property.property_images && property.property_images.length > 0
+    ? [...property.property_images]
+        .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+        .map(img => img.image_url)
+    : [PLACEHOLDER_IMAGE];
 
   const typeMap: Record<string, string> = {
     'apartamento': 'Apartamento',
@@ -82,19 +87,56 @@ const PropertyDetail = () => {
                     <CarouselContent>
                       {sortedImages.map((image, index) => (
                         <CarouselItem key={index}>
-                          <div className="aspect-video rounded-xl overflow-hidden">
-                            <img
-                              src={image}
-                              alt={`${property.title} - Foto ${index + 1}`}
-                              className="w-full h-full object-cover"
-                            />
+                          <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
+                            {image === PLACEHOLDER_IMAGE ? (
+                              <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
+                                <ImageOff className="w-16 h-16 mb-2" />
+                                <span>Sem imagem</span>
+                              </div>
+                            ) : (
+                              <img
+                                src={image}
+                                alt={`${property.title} - Foto ${index + 1}`}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                                }}
+                              />
+                            )}
                           </div>
                         </CarouselItem>
                       ))}
                     </CarouselContent>
-                    <CarouselPrevious />
-                    <CarouselNext />
+                    {sortedImages.length > 1 && (
+                      <>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                      </>
+                    )}
                   </Carousel>
+                  
+                  {/* Thumbnail indicators */}
+                  {sortedImages.length > 1 && (
+                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                      {sortedImages.slice(0, 5).map((image, index) => (
+                        <div 
+                          key={index} 
+                          className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors cursor-pointer"
+                        >
+                          <img
+                            src={image}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                      {sortedImages.length > 5 && (
+                        <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-muted flex items-center justify-center text-sm text-muted-foreground">
+                          +{sortedImages.length - 5}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Details */}
@@ -112,8 +154,13 @@ const PropertyDetail = () => {
                     <span>{property.location}</span>
                   </div>
 
-                  <div className="text-3xl font-bold text-primary mb-8">
-                    R$ {Number(property.price).toLocaleString('pt-BR')}
+                  <div className="mb-8">
+                    <div className="text-3xl font-bold text-primary mb-1">
+                      {formatCurrency(Number(property.price))}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {formatCurrencyFull(Number(property.price))}
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-4 gap-4 mb-8">
