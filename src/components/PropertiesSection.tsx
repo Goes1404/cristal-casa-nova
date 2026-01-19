@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import PropertyCard from './PropertyCard';
 import { Loader2 } from 'lucide-react';
+import { formatCurrency } from '@/lib/formatCurrency';
 
 const PropertiesSection = () => {
   const { data: properties, isLoading } = useQuery({
@@ -25,6 +26,14 @@ const PropertiesSection = () => {
       return data;
     }
   });
+
+  const typeMap: Record<string, string> = {
+    'apartamento': 'Apartamento',
+    'casa': 'Casa',
+    'cobertura': 'Cobertura',
+    'terreno': 'Terreno',
+    'comercial': 'Comercial'
+  };
 
   return (
     <section id="properties" className="py-20 bg-white">
@@ -51,14 +60,6 @@ const PropertiesSection = () => {
                   .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
                   .map(img => img.image_url);
                 
-                const typeMap: Record<string, string> = {
-                  'apartamento': 'Apartamento',
-                  'casa': 'Casa',
-                  'cobertura': 'Cobertura',
-                  'terreno': 'Terreno',
-                  'comercial': 'Comercial'
-                };
-                
                 return (
                   <PropertyCard
                     key={property.id}
@@ -71,7 +72,7 @@ const PropertiesSection = () => {
                     bathrooms={property.bathrooms}
                     parking={property.parking}
                     area={property.area}
-                    price={`R$ ${Number(property.price).toLocaleString('pt-BR')}`}
+                    price={formatCurrency(Number(property.price))}
                   />
                 );
               })}
