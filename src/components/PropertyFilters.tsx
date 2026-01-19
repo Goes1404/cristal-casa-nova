@@ -23,7 +23,7 @@ export interface FilterValues {
 }
 
 const PROPERTY_TYPES = [
-  { value: '', label: 'Todos os Tipos' },
+  { value: 'all', label: 'Todos os Tipos' },
   { value: 'apartamento', label: 'Apartamento' },
   { value: 'casa', label: 'Casa' },
   { value: 'cobertura', label: 'Cobertura' },
@@ -32,7 +32,7 @@ const PROPERTY_TYPES = [
 ];
 
 const PROPERTY_STATUS = [
-  { value: '', label: 'Todos os Status' },
+  { value: 'all', label: 'Todos os Status' },
   { value: 'disponivel', label: 'Disponível' },
   { value: 'vendido', label: 'Vendido' },
   { value: 'alugado', label: 'Alugado' },
@@ -40,10 +40,10 @@ const PROPERTY_STATUS = [
 
 const PropertyFilters = ({ locations, onFiltersChange, minPrice, maxPrice }: PropertyFiltersProps) => {
   const [filters, setFilters] = useState<FilterValues>({
-    location: '',
+    location: 'all',
     priceRange: [minPrice, maxPrice],
-    type: '',
-    status: '',
+    type: 'all',
+    status: 'all',
     searchId: '',
   });
 
@@ -62,9 +62,9 @@ const PropertyFilters = ({ locations, onFiltersChange, minPrice, maxPrice }: Pro
   };
 
   const hasActiveFilters = useMemo(() => {
-    return filters.location !== '' ||
-      filters.type !== '' ||
-      filters.status !== '' ||
+    return filters.location !== 'all' ||
+      filters.type !== 'all' ||
+      filters.status !== 'all' ||
       filters.searchId !== '' ||
       filters.priceRange[0] !== minPrice ||
       filters.priceRange[1] !== maxPrice;
@@ -72,10 +72,10 @@ const PropertyFilters = ({ locations, onFiltersChange, minPrice, maxPrice }: Pro
 
   const clearFilters = () => {
     const defaultFilters: FilterValues = {
-      location: '',
+      location: 'all',
       priceRange: [minPrice, maxPrice],
-      type: '',
-      status: '',
+      type: 'all',
+      status: 'all',
       searchId: '',
     };
     setFilters(defaultFilters);
@@ -132,7 +132,7 @@ const PropertyFilters = ({ locations, onFiltersChange, minPrice, maxPrice }: Pro
               <SelectValue placeholder="Localização" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Todas as Localizações</SelectItem>
+              <SelectItem value="all">Todas as Localizações</SelectItem>
               {uniqueLocations.map((location) => (
                 <SelectItem key={location} value={location}>
                   {location}
