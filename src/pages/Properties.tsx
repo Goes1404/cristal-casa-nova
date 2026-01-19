@@ -10,10 +10,10 @@ import { formatCurrency } from '@/lib/formatCurrency';
 
 const Properties = () => {
   const [filters, setFilters] = useState<FilterValues>({
-    location: '',
+    location: 'all',
     priceRange: [0, 50000000],
-    type: '',
-    status: '',
+    type: 'all',
+    status: 'all',
     searchId: '',
   });
 
@@ -79,17 +79,17 @@ const Properties = () => {
       }
 
       // Filter by location
-      if (filters.location && property.location !== filters.location) {
+      if (filters.location !== 'all' && property.location !== filters.location) {
         return false;
       }
 
       // Filter by type
-      if (filters.type && property.type !== filters.type) {
+      if (filters.type !== 'all' && property.type !== filters.type) {
         return false;
       }
 
       // Filter by status
-      if (filters.status && property.status !== filters.status) {
+      if (filters.status !== 'all' && property.status !== filters.status) {
         return false;
       }
 
