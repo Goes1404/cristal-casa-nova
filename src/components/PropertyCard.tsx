@@ -51,7 +51,7 @@ const PropertyCard = ({
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 bg-[sidebar-accent-foreground] shadow-xl bg-sidebar border border-card-foreground border-double rounded-lg opacity-100">
         {/* Location */}
         <div className="flex items-center space-x-2 text-muted-foreground mb-3">
           <MapPin className="w-4 h-4" />
