@@ -42,7 +42,7 @@ const Footer = () => {
     href: 'contact'
   }];
   return <footer className="bg-primary text-primary-foreground">
-      <div className="container-premium py-16 md:py-20 text-primary bg-secondary-foreground border-primary-foreground">
+      <div className="container-premium py-16 md:py-20 text-primary border-primary-foreground bg-primary-foreground">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
