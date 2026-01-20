@@ -72,7 +72,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-heading font-semibold text-lg mb-8 tracking-tight">
+            <h3 className="font-heading font-semibold text-lg mb-8 tracking-tight text-card-foreground">
               Links Rápidos
             </h3>
             <ul className="space-y-4 text-crystal-gray">
