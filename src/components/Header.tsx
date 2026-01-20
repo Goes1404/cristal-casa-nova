@@ -34,39 +34,37 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-background/80 backdrop-blur-xl z-50 border-b border-border/50">
-      <div className="container-premium">
-        <div className="flex items-center justify-between h-18 md:h-22 py-4">
+    <header className="fixed top-0 w-full bg-background/95 backdrop-blur-md z-50 shadow-soft border-b border-border">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-gradient-accent rounded-2xl flex items-center justify-center shadow-medium">
-              <div className="w-5 h-5 bg-white rounded transform rotate-45"></div>
+          <div className="flex items-center space-x-2">
+            <div className="w-10 h-10 bg-gradient-accent rounded-lg flex items-center justify-center">
+              <div className="w-6 h-6 bg-white rounded transform rotate-45"></div>
             </div>
-            <div className="font-heading font-bold text-xl md:text-2xl text-foreground tracking-tight">
+            <div className="font-heading font-bold text-xl md:text-2xl text-primary">
               Corretora Cristal
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2">
+          <nav className="hidden md:flex items-center space-x-4">
             {navigation.map((item) => (
               <button
                 key={item.name}
                 onClick={() => handleNavClick(item.href)}
-                className="px-4 py-2.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-xl transition-all duration-300 font-medium text-sm"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
               >
                 {item.name}
               </button>
             ))}
 
             {/* Theme Toggle */}
-            <div className="ml-2">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
 
             {/* Mostrar Admin somente quando isAdmin === true */}
             {isAdmin === true && (
-              <Link to="/admin" className="ml-2 px-5 py-2.5 rounded-xl font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 flex items-center gap-2">
+              <Link to="/admin" className="btn-hero flex items-center gap-2 px-4 py-2">
                 <UserCircle className="h-4 w-4" />
                 <span>Admin</span>
               </Link>
@@ -74,7 +72,7 @@ const Header = () => {
 
             {/* Mostrar botão Entrar quando não há usuário */}
             {!user && !loading && (
-              <Link to="/auth" className="ml-2 px-5 py-2.5 rounded-xl font-semibold text-sm bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 flex items-center gap-2">
+              <Link to="/auth" className="btn-hero flex items-center gap-2 px-4 py-2">
                 <UserCircle className="h-4 w-4" />
                 <span>Entrar</span>
               </Link>
