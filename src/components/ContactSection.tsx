@@ -62,7 +62,7 @@ const ContactSection = () => {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="heading-section my-0 py-[5px]">Fale Conosco</h2>
+            <h2 className="heading-section py-[5px] my-[5px]">Fale Conosco</h2>
             <p className="text-lead max-w-2xl mx-auto">Pronto para encontrar seu imóvel ideal? 
 Entre em contato conosco e transforme seu sonho em realidade.</p>
           </div>
@@ -112,7 +112,7 @@ Entre em contato conosco e transforme seu sonho em realidade.</p>
 
             {/* Contact Form */}
             <div>
-              <form onSubmit={handleSubmit} className="card-crystal">
+              <form onSubmit={handleSubmit} className="card-crystal my-[20px]">
                 <h3 className="text-2xl font-bold text-primary mb-6">
                   Envie sua Mensagem
                 </h3>

@@ -22,7 +22,7 @@ const AboutSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="heading-section">Quem é a Corretora Cristal?</h2>
+            <h2 className="heading-section my-[50px]">Quem é a Corretora Cristal?</h2>
             <p className="text-lead max-w-2xl mx-auto">
               Uma Profissional comprometida em transformar sonhos em realidade através 
               do mercado imobiliário.
