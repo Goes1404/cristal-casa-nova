@@ -62,7 +62,7 @@ const ContactSection = () => {
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="heading-section">Fale Conosco</h2>
+            <h2 className="heading-section text-primary">Fale Conosco</h2>
             <p className="text-lead max-w-2xl mx-auto">Pronto para encontrar seu imóvel ideal? 
 Entre em contato conosco e transforme seu sonho em realidade.</p>
           </div>
