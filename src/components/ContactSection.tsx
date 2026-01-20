@@ -58,11 +58,11 @@ const ContactSection = () => {
     link: '#'
   }];
   return <section id="contact" className="py-20 bg-gradient-to-b from-muted to-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 bg-muted">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="heading-section">Fale Conosco</h2>
+            <h2 className="heading-section my-0 py-[5px]">Fale Conosco</h2>
             <p className="text-lead max-w-2xl mx-auto">Pronto para encontrar seu imóvel ideal? 
 Entre em contato conosco e transforme seu sonho em realidade.</p>
           </div>
