@@ -42,7 +42,7 @@ const Footer = () => {
     href: 'contact'
   }];
   return <footer className="bg-primary text-primary-foreground">
-      <div className="container-premium py-16 md:py-20 bg-primary-foreground text-primary">
+      <div className="container-premium py-16 md:py-20 text-primary bg-secondary-foreground border-primary-foreground">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
@@ -77,12 +77,12 @@ const Footer = () => {
             </h3>
             <ul className="space-y-4 text-crystal-gray">
               {quickLinks.map((link, index) => <li key={index}>
-                  <button onClick={() => handleNavClick(link.href)} className="text-primary-foreground/80 hover:text-white hover:translate-x-1 transition-all duration-300 text-left font-medium">
+                  <button onClick={() => handleNavClick(link.href)} className="hover:translate-x-1 transition-all duration-300 text-left font-medium text-primary">
                     {link.name}
                   </button>
                 </li>)}
               <li>
-                <Link to="/auth" className="flex items-center gap-2 text-primary-foreground/80 hover:text-white hover:translate-x-1 transition-all duration-300 font-medium">
+                <Link to="/auth" className="flex items-center gap-2 hover:translate-x-1 transition-all duration-300 font-medium text-primary">
                   <Lock className="w-4 h-4" />
                   Área Administrativa
                 </Link>
@@ -92,7 +92,7 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h3 className="font-heading font-semibold text-lg mb-8 tracking-tight">
+            <h3 className="font-heading font-semibold text-lg mb-8 tracking-tight text-primary">
               Contato
             </h3>
             <div className="space-y-5">
@@ -100,7 +100,7 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
                   <Phone className="w-5 h-5 text-accent" />
                 </div>
-                <a href="tel:+5511996188216" className="text-primary-foreground/80 hover:text-white transition-colors font-medium">
+                <a href="tel:+5511996188216" className="transition-colors font-medium text-primary">
                   (11) 99618-8216
                 </a>
               </div>
@@ -109,7 +109,7 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
                   <Mail className="w-5 h-5 text-accent" />
                 </div>
-                <a href="mailto:sq1brunaleite@gmail.com" className="text-primary-foreground/80 hover:text-white transition-colors font-medium">
+                <a href="mailto:sq1brunaleite@gmail.com" className="transition-colors font-medium text-primary">
                   sq1brunaleite@gmail.com
                 </a>
               </div>
@@ -118,7 +118,7 @@ const Footer = () => {
                 <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <MapPin className="w-5 h-5 text-accent" />
                 </div>
-                <div className="text-primary-foreground/80 font-medium leading-relaxed">
+                <div className="font-medium leading-relaxed text-primary">
                   Calçada Antares, 264 - 2° Andar<br />
                   Alphaville, Santana de Parnaíba - SP<br />
                   CEP: 06654-450
@@ -131,15 +131,15 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-16 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-primary-foreground/60 text-sm font-medium">
+            <div className="text-sm font-medium text-primary">
               © 2025 Corretora Cristal. Todos os direitos reservados.
             </div>
             
             <div className="flex gap-8 text-sm">
-              <a href="#" className="text-primary-foreground/60 hover:text-white transition-colors font-medium">
+              <a href="#" className="transition-colors font-medium text-primary">
                 Política de Privacidade
               </a>
-              <a href="#" className="text-primary-foreground/60 hover:text-white transition-colors font-medium">
+              <a href="#" className="transition-colors font-medium text-primary">
                 Termos de Uso
               </a>
             </div>
