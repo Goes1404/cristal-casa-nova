@@ -62,33 +62,48 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
+    /* Crystal Dark Palette - Maintaining brand identity */
+    --crystal-primary: 210 100% 70%;           /* Lighter crystal blue for dark */
+    --crystal-primary-light: 210 100% 80%;     /* Even lighter blue */
+    --crystal-secondary: 45 70% 60%;           /* Brighter gold */
+    --crystal-accent: 195 100% 55%;            /* Brighter cyan */
+    
+    /* Dark Neutrals */
+    --crystal-white: 0 0% 100%;
+    --crystal-light: 222 47% 15%;              /* Dark card bg */
+    --crystal-gray: 215 20% 65%;               /* Light gray text */
+    --crystal-dark: 210 40% 98%;               /* Light text */
+    
+    /* Semantic Design Tokens - Dark */
+    --background: 222 47% 8%;                  /* Deep dark blue */
+    --foreground: 210 40% 98%;                 /* Light text */
+    
+    --primary: 210 100% 70%;                   /* Crystal blue light */
+    --primary-foreground: 222 47% 8%;          /* Dark text on primary */
+    
+    --secondary: 222 47% 15%;                  /* Dark secondary */
     --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    
+    --accent: 45 70% 60%;                      /* Brighter gold */
+    --accent-foreground: 222 47% 8%;
+    
+    --muted: 217 33% 17%;                      /* Dark muted */
+    --muted-foreground: 215 20% 65%;           /* Light muted text */
+    
+    --card: 222 47% 11%;                       /* Dark card */
+    --card-foreground: 210 40% 98%;
+    
+    --border: 217 33% 20%;                     /* Dark border */
+    --input: 217 33% 20%;
+    --ring: 195 100% 55%;                      /* Cyan ring */
+    
+    /* Dark Shadows */
+    --shadow-soft: 0 2px 20px -2px rgba(0, 0, 0, 0.4);
+    --shadow-medium: 0 8px 25px -8px rgba(0, 0, 0, 0.5);
+    --shadow-strong: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 30px hsl(195 100% 55% / 0.2);
+    
+    /* Sidebar Dark */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,6 +116,22 @@
 }
 
 @layer base {
+  /* Global overflow control for mobile responsiveness */
+  html {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  #root {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   * {
     @apply border-border;
   }
@@ -108,6 +139,7 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -119,40 +151,47 @@
 @layer components {
   /* Crystal Button Styles */
   .btn-hero {
-    @apply bg-gradient-to-r from-accent to-primary text-accent-foreground font-medium px-8 py-4 rounded-xl;
+    @apply bg-gradient-to-r from-accent to-primary text-white font-medium px-8 py-4 rounded-xl;
     @apply shadow-[var(--shadow-medium)] hover:shadow-[var(--shadow-strong)];
-    @apply transition-[var(--transition-smooth)] hover:scale-105;
+    @apply transition-all duration-300 hover:scale-105;
   }
 
   .btn-outline {
     @apply border-2 border-primary text-primary bg-transparent px-6 py-3 rounded-lg;
-    @apply hover:bg-primary hover:text-primary-foreground;
-    @apply transition-[var(--transition-smooth)];
+    @apply hover:bg-primary hover:text-white;
+    @apply transition-all duration-300;
   }
 
   /* Crystal Card Styles */
   .card-crystal {
-    @apply bg-gradient-to-br from-card to-muted rounded-2xl p-6;
+    @apply bg-card rounded-2xl p-6;
     @apply shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-medium)];
-    @apply transition-[var(--transition-smooth)] hover:-translate-y-1;
+    @apply transition-all duration-300 hover:-translate-y-1;
+    @apply border border-border;
   }
 
   .card-property {
     @apply bg-card rounded-xl overflow-hidden;
     @apply shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-strong)];
-    @apply transition-[var(--transition-spring)] hover:-translate-y-2;
+    @apply transition-all duration-500 hover:-translate-y-2;
+    @apply border border-border;
   }
 
   /* Typography */
   .heading-hero {
-    @apply text-4xl md:text-6xl font-bold text-primary-foreground leading-tight;
+    @apply text-4xl md:text-6xl font-bold text-white leading-tight;
   }
 
   .heading-section {
-    @apply text-3xl md:text-4xl font-bold text-primary mb-8;
+    @apply text-3xl md:text-4xl font-bold text-foreground mb-8;
   }
 
   .text-lead {
     @apply text-lg md:text-xl text-muted-foreground leading-relaxed;
+  }
+
+  /* Shadow utility class */
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
   }
 }

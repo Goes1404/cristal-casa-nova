@@ -1,12 +1,23 @@
 import { ArrowRight, Star } from 'lucide-react';
 import heroImage from '@/assets/hero-luxury-home.jpg';
+
 const HeroSection = () => {
-  return <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{
-    backgroundImage: `linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.5)), url(${heroImage})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundAttachment: 'fixed'
-  }}>
+  return (
+    <section 
+      id="home" 
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Background Image - Fixed for desktop, scroll for mobile (iOS fix) */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center md:bg-fixed"
+        style={{
+          backgroundImage: `url(${heroImage})`,
+        }}
+      />
+      
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/70 to-primary/50 dark:from-background/80 dark:to-background/60" />
+      
       {/* Content */}
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
@@ -76,6 +87,8 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
