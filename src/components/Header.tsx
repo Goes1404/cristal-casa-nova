@@ -1,8 +1,9 @@
-// src/components/Header.jsx
+// src/components/Header.tsx
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Home, Building, Users, Phone, UserCircle } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,21 +22,19 @@ const Header = () => {
     setIsMenuOpen(false);
     
     if (location.pathname !== '/') {
-      // Se não está na home, navega para home e depois faz scroll
       navigate('/');
       setTimeout(() => {
         const element = document.getElementById(href);
         element?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else {
-      // Se já está na home, só faz scroll
       const element = document.getElementById(href);
       element?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/95 backdrop-blur-md z-50 shadow-soft">
+    <header className="fixed top-0 w-full bg-background/95 backdrop-blur-md z-50 shadow-soft border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
@@ -54,11 +53,14 @@ const Header = () => {
               <button
                 key={item.name}
                 onClick={() => handleNavClick(item.href)}
-                className="text-crystal-gray hover:text-primary transition-colors duration-300 font-medium"
+                className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
               >
                 {item.name}
               </button>
             ))}
+
+            {/* Theme Toggle */}
+            <ThemeToggle />
 
             {/* Mostrar Admin somente quando isAdmin === true */}
             {isAdmin === true && (
@@ -78,17 +80,20 @@ const Header = () => {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-primary" />
-            ) : (
-              <Menu className="w-6 h-6 text-primary" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg hover:bg-muted transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-primary" />
+              ) : (
+                <Menu className="w-6 h-6 text-primary" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -101,7 +106,7 @@ const Header = () => {
                   <button
                     key={item.name}
                     onClick={() => handleNavClick(item.href)}
-                    className="flex items-center space-x-3 text-crystal-gray hover:text-primary transition-colors duration-300 font-medium py-2 text-left"
+                    className="flex items-center space-x-3 text-muted-foreground hover:text-primary transition-colors duration-300 font-medium py-2 text-left"
                   >
                     <Icon className="w-5 h-5" />
                     <span>{item.name}</span>
