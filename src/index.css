@@ -62,56 +62,113 @@
   }
 
   .dark {
-    /* Crystal Dark Palette - Maintaining brand identity */
-    --crystal-primary: 210 100% 70%;           /* Lighter crystal blue for dark */
-    --crystal-primary-light: 210 100% 80%;     /* Even lighter blue */
-    --crystal-secondary: 45 70% 60%;           /* Brighter gold */
-    --crystal-accent: 195 100% 55%;            /* Brighter cyan */
+    /* 
+     * Crystal Dark Mode - Premium Real Estate Palette
+     * Aplicando: Regra 60-30-10, Contraste WCAG AA, Hierarquia Visual
+     * 60% - Background escuro sofisticado
+     * 30% - Superfícies elevadas (cards, inputs)
+     * 10% - Acentos dourados e ciano
+     */
     
-    /* Dark Neutrals */
+    /* Crystal Brand Colors - Dark Adaptation */
+    --crystal-primary: 205 85% 65%;            /* Azul safira luminoso */
+    --crystal-primary-light: 205 90% 75%;      /* Azul claro para hovers */
+    --crystal-secondary: 43 85% 58%;           /* Ouro champagne vibrante */
+    --crystal-accent: 187 100% 50%;            /* Ciano elétrico premium */
+    
+    /* Neutrals - Layered Dark System (Elevation) */
     --crystal-white: 0 0% 100%;
-    --crystal-light: 222 47% 15%;              /* Dark card bg */
-    --crystal-gray: 215 20% 65%;               /* Light gray text */
-    --crystal-dark: 210 40% 98%;               /* Light text */
+    --crystal-light: 220 25% 14%;              /* Superfície elevada +1 */
+    --crystal-gray: 215 15% 70%;               /* Texto secundário */
+    --crystal-dark: 210 20% 96%;               /* Texto primário */
     
-    /* Semantic Design Tokens - Dark */
-    --background: 222 47% 8%;                  /* Deep dark blue */
-    --foreground: 210 40% 98%;                 /* Light text */
+    /* === SEMANTIC DESIGN TOKENS === */
     
-    --primary: 210 100% 70%;                   /* Crystal blue light */
-    --primary-foreground: 222 47% 8%;          /* Dark text on primary */
+    /* Base - 60% Dominant */
+    --background: 225 30% 6%;                  /* Azul petróleo profundo */
+    --foreground: 210 20% 96%;                 /* Branco suave (não puro) */
     
-    --secondary: 222 47% 15%;                  /* Dark secondary */
-    --secondary-foreground: 210 40% 98%;
+    /* Primary - Ação principal */
+    --primary: 205 85% 65%;                    /* Azul safira */
+    --primary-foreground: 225 30% 6%;          /* Contraste máximo */
     
-    --accent: 45 70% 60%;                      /* Brighter gold */
-    --accent-foreground: 222 47% 8%;
+    /* Secondary - 30% Superfícies */
+    --secondary: 220 25% 12%;                  /* Elevação nível 1 */
+    --secondary-foreground: 210 20% 92%;
     
-    --muted: 217 33% 17%;                      /* Dark muted */
-    --muted-foreground: 215 20% 65%;           /* Light muted text */
+    /* Accent - 10% Destaque (Ouro) */
+    --accent: 43 85% 58%;                      /* Ouro champagne */
+    --accent-foreground: 225 30% 8%;
     
-    --card: 222 47% 11%;                       /* Dark card */
-    --card-foreground: 210 40% 98%;
+    /* Muted - Elementos sutis */
+    --muted: 220 20% 16%;                      /* Elevação nível 2 */
+    --muted-foreground: 215 15% 60%;           /* Texto terciário */
     
-    --border: 217 33% 20%;                     /* Dark border */
-    --input: 217 33% 20%;
-    --ring: 195 100% 55%;                      /* Cyan ring */
+    /* Cards - Sistema de elevação */
+    --card: 220 25% 10%;                       /* Base card */
+    --card-foreground: 210 20% 94%;
     
-    /* Dark Shadows */
-    --shadow-soft: 0 2px 20px -2px rgba(0, 0, 0, 0.4);
-    --shadow-medium: 0 8px 25px -8px rgba(0, 0, 0, 0.5);
-    --shadow-strong: 0 15px 35px -5px rgba(0, 0, 0, 0.6);
-    --shadow-glow: 0 0 30px hsl(195 100% 55% / 0.2);
+    /* Borders & Inputs - Definição sutil */
+    --border: 220 20% 18%;                     /* Borda suave */
+    --input: 220 20% 15%;                      /* Input background */
+    --ring: 187 100% 50%;                      /* Focus ring ciano */
     
-    /* Sidebar Dark */
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* === PREMIUM EFFECTS === */
+    
+    /* Shadows - Profundidade dimensional */
+    --shadow-soft: 
+      0 2px 8px -2px rgba(0, 0, 0, 0.5),
+      0 4px 16px -4px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 
+      0 4px 12px -2px rgba(0, 0, 0, 0.6),
+      0 8px 24px -4px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.03);
+    --shadow-strong: 
+      0 8px 24px -4px rgba(0, 0, 0, 0.7),
+      0 16px 48px -8px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+    
+    /* Glow Effects - Premium highlights */
+    --shadow-glow: 
+      0 0 20px hsl(187 100% 50% / 0.15),
+      0 0 40px hsl(187 100% 50% / 0.08),
+      0 0 60px hsl(187 100% 50% / 0.04);
+    
+    /* Gradients - Dark mode specific */
+    --gradient-hero: linear-gradient(
+      135deg, 
+      hsl(225 30% 8%) 0%, 
+      hsl(220 25% 12%) 50%,
+      hsl(225 30% 6%) 100%
+    );
+    --gradient-card: linear-gradient(
+      145deg, 
+      hsl(220 25% 12%) 0%, 
+      hsl(220 25% 10%) 100%
+    );
+    --gradient-accent: linear-gradient(
+      135deg, 
+      hsl(43 85% 58%) 0%, 
+      hsl(35 90% 52%) 100%
+    );
+    
+    /* === SIDEBAR === */
+    --sidebar-background: 225 30% 7%;
+    --sidebar-foreground: 210 20% 94%;
+    --sidebar-primary: 205 85% 65%;
+    --sidebar-primary-foreground: 225 30% 6%;
+    --sidebar-accent: 220 25% 14%;
+    --sidebar-accent-foreground: 210 20% 92%;
+    --sidebar-border: 220 20% 16%;
+    --sidebar-ring: 187 100% 50%;
+    
+    /* === POPOVER & DIALOG === */
+    --popover: 220 25% 11%;
+    --popover-foreground: 210 20% 94%;
+    
+    /* === DESTRUCTIVE === */
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
   }
 }
 
