@@ -1,38 +1,48 @@
 import { Instagram, Facebook, Mail, Phone, MapPin, Lock } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
 const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const handleNavClick = (href: string) => {
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
         const element = document.getElementById(href);
-        element?.scrollIntoView({ behavior: 'smooth' });
+        element?.scrollIntoView({
+          behavior: 'smooth'
+        });
       }, 100);
     } else {
       const element = document.getElementById(href);
-      element?.scrollIntoView({ behavior: 'smooth' });
+      element?.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  const socialLinks = [
-    { icon: Instagram, href: '#', label: 'Instagram' },
-    { icon: Facebook, href: '#', label: 'Facebook' }
-  ];
-
-  const quickLinks = [
-    { name: 'Início', href: 'home' },
-    { name: 'Imóveis', href: 'properties' },
-    { name: 'Sobre Nós', href: 'about' },
-    { name: 'Contato', href: 'contact' }
-  ];
-
-  return (
-    <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12">
+  const socialLinks = [{
+    icon: Instagram,
+    href: '#',
+    label: 'Instagram'
+  }, {
+    icon: Facebook,
+    href: '#',
+    label: 'Facebook'
+  }];
+  const quickLinks = [{
+    name: 'Início',
+    href: 'home'
+  }, {
+    name: 'Imóveis',
+    href: 'properties'
+  }, {
+    name: 'Sobre Nós',
+    href: 'about'
+  }, {
+    name: 'Contato',
+    href: 'contact'
+  }];
+  return <footer className="bg-primary text-primary-foreground">
+      <div className="container mx-auto px-4 py-12 bg-blue-300">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
@@ -52,18 +62,11 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex space-x-4">
               {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={index}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors"
-                  >
+              const Icon = social.icon;
+              return <a key={index} href={social.href} aria-label={social.label} className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center hover:bg-accent transition-colors">
                     <Icon className="w-5 h-5" />
-                  </a>
-                );
-              })}
+                  </a>;
+            })}
             </div>
           </div>
 
@@ -73,21 +76,13 @@ const Footer = () => {
               Links Rápidos
             </h3>
             <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
-                  <button 
-                    onClick={() => handleNavClick(link.href)}
-                    className="text-primary-foreground/80 hover:text-white transition-colors text-left"
-                  >
+              {quickLinks.map((link, index) => <li key={index}>
+                  <button onClick={() => handleNavClick(link.href)} className="text-primary-foreground/80 hover:text-white transition-colors text-left">
                     {link.name}
                   </button>
-                </li>
-              ))}
+                </li>)}
               <li>
-                <Link 
-                  to="/auth"
-                  className="flex items-center gap-2 text-primary-foreground/80 hover:text-white transition-colors"
-                >
+                <Link to="/auth" className="flex items-center gap-2 text-primary-foreground/80 hover:text-white transition-colors">
                   <Lock className="w-4 h-4" />
                   Área Administrativa
                 </Link>
@@ -104,10 +99,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <div>
-                  <a 
-                    href="tel:+5511996188216"
-                    className="text-primary-foreground/80 hover:text-white transition-colors"
-                  >
+                  <a href="tel:+5511996188216" className="text-primary-foreground/80 hover:text-white transition-colors">
                     (11) 99618-8216
                   </a>
                 </div>
@@ -116,10 +108,7 @@ const Footer = () => {
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <div>
-                  <a 
-                    href="mailto:sq1brunaleite@gmail.com"
-                    className="text-primary-foreground/80 hover:text-white transition-colors"
-                  >
+                  <a href="mailto:sq1brunaleite@gmail.com" className="text-primary-foreground/80 hover:text-white transition-colors">
                     sq1brunaleite@gmail.com
                   </a>
                 </div>
@@ -155,8 +144,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;

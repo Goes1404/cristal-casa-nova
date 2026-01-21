@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
 
 type Theme = 'light' | 'dark';
 
@@ -42,9 +42,17 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     localStorage.setItem('cristal-theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
+    // Add transition class for smooth theme change animation
+    document.documentElement.classList.add('theme-transition');
+    
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+    
+    // Remove transition class after animation completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transition');
+    }, 500);
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

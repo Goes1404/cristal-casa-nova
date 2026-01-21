@@ -11,7 +11,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/70 to-primary/50 dark:from-background/80 dark:to-background/60" />
       
       {/* Content */}
-      <div className="container mx-auto px-4 text-center relative z-10 my-[15px]">
+      <div className="container mx-auto px-4 text-center relative z-10 my-[50px]">
         <div className="max-w-4xl mx-auto">
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
@@ -20,7 +20,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="heading-hero mb-6">
+          <h1 className="heading-hero mb-6 my-[50px]">
             A chave para o seu{' '}
             <span className="bg-gradient-to-r from-accent to-crystal-accent bg-clip-text text-transparent">
               imóvel dos sonhos

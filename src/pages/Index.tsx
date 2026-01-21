@@ -4,20 +4,16 @@ import AboutSection from '../components/AboutSection';
 import PropertiesSection from '../components/PropertiesSection';
 import ContactSection from '../components/ContactSection';
 import Footer from '../components/Footer';
-
 const Index = () => {
-  return (
-    <div className="min-h-screen max-w-full overflow-x-hidden bg-background">
+  return <div className="min-h-screen max-w-full overflow-x-hidden bg-background">
       <Header />
       <main>
         <HeroSection />
         <AboutSection />
-        <PropertiesSection />
+        <PropertiesSection className="bg-primary-foreground" />
         <ContactSection />
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
