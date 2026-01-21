@@ -57,7 +57,7 @@ const ContactSection = () => {
     info: 'Calçada Antares, 264, Segundo Andar, Alphaville, Santana de Parnaíba, SP, Brasil',
     link: '#'
   }];
-  return <section id="contact" className="py-20 bg-gradient-to-b from-muted to-background dark:from-secondary dark:to-background">
+  return <section id="contact" className="py-20 bg-gradient-to-b from-muted to-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -91,7 +91,7 @@ Entre em contato conosco e transforme seu sonho em realidade.</p>
               })}
               </div>
 
-              <div className="bg-card dark:bg-secondary rounded-xl p-6 shadow-soft border border-border">
+              <div className="bg-gradient-card rounded-xl p-6 shadow-soft">
                 <h4 className="font-bold text-primary mb-3">Horário de Atendimento</h4>
                 <div className="space-y-2 text-crystal-gray">
                   <div className="flex justify-between">
