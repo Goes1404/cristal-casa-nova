@@ -1,25 +1,17 @@
 import { ArrowRight, Star } from 'lucide-react';
 import heroImage from '@/assets/hero-luxury-home.jpg';
-
 const HeroSection = () => {
-  return (
-    <section 
-      id="home" 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
+  return <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image - Fixed for desktop, scroll for mobile (iOS fix) */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center md:bg-fixed"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-        }}
-      />
+      <div className="absolute inset-0 bg-cover bg-center md:bg-fixed" style={{
+      backgroundImage: `url(${heroImage})`
+    }} />
       
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-primary/70 to-primary/50 dark:from-background/80 dark:to-background/60" />
       
       {/* Content */}
-      <div className="container mx-auto px-4 text-center relative z-10">
+      <div className="container mx-auto px-4 text-center relative z-10 my-[15px]">
         <div className="max-w-4xl mx-auto">
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
@@ -43,18 +35,16 @@ const HeroSection = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={() => document.getElementById('properties')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-hero inline-flex items-center space-x-2"
-            >
+            <button onClick={() => document.getElementById('properties')?.scrollIntoView({
+            behavior: 'smooth'
+          })} className="btn-hero inline-flex items-center space-x-2">
               <span>Ver Imóveis em Destaque</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             
-            <button 
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-outline text-white border-white hover:bg-white hover:text-primary"
-            >
+            <button onClick={() => document.getElementById('contact')?.scrollIntoView({
+            behavior: 'smooth'
+          })} className="btn-outline text-white border-white hover:bg-white hover:text-primary">
               Fale Conosco
             </button>
           </div>
@@ -87,8 +77,6 @@ const HeroSection = () => {
           <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
