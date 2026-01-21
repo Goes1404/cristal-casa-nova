@@ -18,7 +18,7 @@ const AboutSection = () => {
     title: 'Experiência',
     description: 'Mais de 15 anos conectando pessoas aos seus lares'
   }];
-  return <section id="about" className="py-20 bg-gradient-to-b from-white to-muted">
+  return <section id="about" className="py-20 bg-gradient-to-b from-background to-muted dark:from-background dark:to-secondary">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
