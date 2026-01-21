@@ -19,7 +19,7 @@ const AboutSection = () => {
     description: 'Mais de 15 anos conectando pessoas aos seus lares'
   }];
   return <section id="about" className="py-20 bg-gradient-to-b from-white to-muted">
-      <div className="container mx-auto px-4 shadow-sm">
+      <div className="container mx-auto px-4 shadow-none">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="heading-section">Quem é a Corretora Cristal?</h2>
