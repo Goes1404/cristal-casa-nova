@@ -48,7 +48,7 @@ const Header = () => {
     }
   };
   return <header className="fixed top-0 w-full bg-background/95 backdrop-blur-md z-50 shadow-soft border-b border-border">
-      <div className="container mx-auto px-4 bg-[#000024]/[0.77]">
+      <div className="container mx-auto px-4 bg-[sidebar-accent-foreground] bg-card">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center space-x-2">
