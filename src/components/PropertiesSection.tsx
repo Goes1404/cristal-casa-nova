@@ -59,7 +59,7 @@ const PropertiesSection = () => {
             </div>}
 
           {/* View All Button */}
-          <div className="text-center">
+          <div className="text-center my-[10px]">
             <a href="/properties" className="btn-hero inline-block">
               Ver Todos os Imóveis
             </a>
