@@ -76,7 +76,7 @@ Conte com a maturidade de quem já enfrentou diversos desafios do mercado e cont
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
             const Icon = value.icon;
-            return <div key={index} className="card-crystal text-center group bg-primary-foreground">
+            return <div key={index} className="card-crystal text-center group">
                   <div className="w-16 h-16 bg-gradient-accent rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
