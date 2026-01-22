@@ -7,56 +7,44 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Bed, Bath, Car, Maximize, MapPin, ArrowLeft, Phone, MessageCircle, ImageOff } from 'lucide-react';
 import { Loader2 } from 'lucide-react';
 import { formatCurrency, formatCurrencyFull } from '@/lib/formatCurrency';
-
 const PLACEHOLDER_IMAGE = '/placeholder.svg';
-
 const PropertyDetail = () => {
-  const { id } = useParams();
+  const {
+    id
+  } = useParams();
   const navigate = useNavigate();
-
-  const { data: property, isLoading } = useQuery({
+  const {
+    data: property,
+    isLoading
+  } = useQuery({
     queryKey: ['property', id],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('properties')
-        .select(`
+      const {
+        data,
+        error
+      } = await supabase.from('properties').select(`
           *,
           property_images (
             image_url,
             is_primary,
             display_order
           )
-        `)
-        .eq('id', id)
-        .single();
-
+        `).eq('id', id).single();
       if (error) throw error;
       return data;
     }
   });
-
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
+    return <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+      </div>;
   }
-
   if (!property) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
+    return <div className="min-h-screen flex items-center justify-center">
         <p>Imóvel não encontrado</p>
-      </div>
-    );
+      </div>;
   }
-
-  const sortedImages = property.property_images && property.property_images.length > 0
-    ? [...property.property_images]
-        .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
-        .map(img => img.image_url)
-    : [PLACEHOLDER_IMAGE];
-
+  const sortedImages = property.property_images && property.property_images.length > 0 ? [...property.property_images].sort((a, b) => (a.display_order || 0) - (b.display_order || 0)).map(img => img.image_url) : [PLACEHOLDER_IMAGE];
   const typeMap: Record<string, string> = {
     'apartamento': 'Apartamento',
     'casa': 'Casa',
@@ -64,18 +52,13 @@ const PropertyDetail = () => {
     'terreno': 'Terreno',
     'comercial': 'Comercial'
   };
-
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Header />
       <main className="pt-20">
-        <section className="py-12 bg-white">
+        <section className="py-12 bg-secondary-foreground">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <button
-                onClick={() => navigate(-1)}
-                className="flex items-center gap-2 text-crystal-gray hover:text-primary mb-6 transition-colors"
-              >
+              <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-crystal-gray hover:text-primary mb-6 transition-colors">
                 <ArrowLeft className="w-5 h-5" />
                 Voltar
               </button>
@@ -85,58 +68,32 @@ const PropertyDetail = () => {
                 <div>
                   <Carousel className="w-full">
                     <CarouselContent>
-                      {sortedImages.map((image, index) => (
-                        <CarouselItem key={index}>
+                      {sortedImages.map((image, index) => <CarouselItem key={index}>
                           <div className="aspect-[4/3] rounded-xl overflow-hidden bg-muted">
-                            {image === PLACEHOLDER_IMAGE ? (
-                              <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
+                            {image === PLACEHOLDER_IMAGE ? <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
                                 <ImageOff className="w-16 h-16 mb-2" />
                                 <span>Sem imagem</span>
-                              </div>
-                            ) : (
-                              <img
-                                src={image}
-                                alt={`${property.title} - Foto ${index + 1}`}
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
-                                }}
-                              />
-                            )}
+                              </div> : <img src={image} alt={`${property.title} - Foto ${index + 1}`} className="w-full h-full object-cover" onError={e => {
+                          (e.target as HTMLImageElement).src = PLACEHOLDER_IMAGE;
+                        }} />}
                           </div>
-                        </CarouselItem>
-                      ))}
+                        </CarouselItem>)}
                     </CarouselContent>
-                    {sortedImages.length > 1 && (
-                      <>
+                    {sortedImages.length > 1 && <>
                         <CarouselPrevious />
                         <CarouselNext />
-                      </>
-                    )}
+                      </>}
                   </Carousel>
                   
                   {/* Thumbnail indicators */}
-                  {sortedImages.length > 1 && (
-                    <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-                      {sortedImages.slice(0, 5).map((image, index) => (
-                        <div 
-                          key={index} 
-                          className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors cursor-pointer"
-                        >
-                          <img
-                            src={image}
-                            alt={`Thumbnail ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-                      {sortedImages.length > 5 && (
-                        <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-muted flex items-center justify-center text-sm text-muted-foreground">
+                  {sortedImages.length > 1 && <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+                      {sortedImages.slice(0, 5).map((image, index) => <div key={index} className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors cursor-pointer">
+                          <img src={image} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                        </div>)}
+                      {sortedImages.length > 5 && <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-muted flex items-center justify-center text-sm text-muted-foreground">
                           +{sortedImages.length - 5}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                        </div>}
+                    </div>}
                 </div>
 
                 {/* Details */}
@@ -186,29 +143,19 @@ const PropertyDetail = () => {
                     </div>
                   </div>
 
-                  {property.description && (
-                    <div className="mb-8">
+                  {property.description && <div className="mb-8">
                       <h2 className="text-xl font-bold text-primary mb-4">Descrição</h2>
                       <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
                         {property.description}
                       </p>
-                    </div>
-                  )}
+                    </div>}
 
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <a
-                      href="https://wa.me/5511996188216"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-hero flex items-center justify-center gap-2"
-                    >
+                    <a href="https://wa.me/5511996188216" target="_blank" rel="noopener noreferrer" className="btn-hero flex items-center justify-center gap-2">
                       <MessageCircle className="w-5 h-5" />
                       WhatsApp
                     </a>
-                    <a
-                      href="tel:+5511996188216"
-                      className="btn-outline flex items-center justify-center gap-2"
-                    >
+                    <a href="tel:+5511996188216" className="btn-outline flex items-center justify-center gap-2">
                       <Phone className="w-5 h-5" />
                       Ligar
                     </a>
@@ -220,8 +167,6 @@ const PropertyDetail = () => {
         </section>
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default PropertyDetail;
