@@ -126,17 +126,17 @@ const PropertyDetail = () => {
                       <div className="font-semibold">{property.bedrooms}</div>
                       <div className="text-sm text-muted-foreground">Quartos</div>
                     </div>
-                    <div className="text-center p-4 rounded-lg bg-border">
+                    <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Bath className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.bathrooms}</div>
                       <div className="text-sm text-muted-foreground">Banheiros</div>
                     </div>
-                    <div className="text-center p-4 rounded-lg bg-border">
+                    <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Car className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.parking}</div>
                       <div className="text-sm text-muted-foreground">Vagas</div>
                     </div>
-                    <div className="text-center p-4 rounded-lg bg-border">
+                    <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Maximize className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.area}</div>
                       <div className="text-sm text-muted-foreground">m²</div>
