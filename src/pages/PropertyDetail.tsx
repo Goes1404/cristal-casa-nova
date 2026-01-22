@@ -121,22 +121,22 @@ const PropertyDetail = () => {
                   </div>
 
                   <div className="grid grid-cols-4 gap-4 mb-8">
-                    <div className="text-center p-4 bg-muted rounded-lg">
+                    <div className="text-center p-4 rounded-lg bg-[sidebar-primary-foreground] bg-border">
                       <Bed className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.bedrooms}</div>
                       <div className="text-sm text-muted-foreground">Quartos</div>
                     </div>
-                    <div className="text-center p-4 bg-muted rounded-lg">
+                    <div className="text-center p-4 rounded-lg bg-border">
                       <Bath className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.bathrooms}</div>
                       <div className="text-sm text-muted-foreground">Banheiros</div>
                     </div>
-                    <div className="text-center p-4 bg-muted rounded-lg">
+                    <div className="text-center p-4 rounded-lg bg-border">
                       <Car className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.parking}</div>
                       <div className="text-sm text-muted-foreground">Vagas</div>
                     </div>
-                    <div className="text-center p-4 bg-muted rounded-lg">
+                    <div className="text-center p-4 rounded-lg bg-border">
                       <Maximize className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.area}</div>
                       <div className="text-sm text-muted-foreground">m²</div>
