@@ -42,7 +42,7 @@ const Footer = () => {
     href: 'contact'
   }];
   return <footer className="bg-primary text-primary-foreground">
-      <div className="container mx-auto px-4 py-12 bg-blue-300">
+      <div className="container mx-auto px-4 py-12 bg-teal-700">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="lg:col-span-2">
