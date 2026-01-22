@@ -2,9 +2,7 @@ import { Bed, Bath, Car, Square, MapPin, Eye, ImageOff } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useNavigate } from 'react-router-dom';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-
 const PLACEHOLDER_IMAGE = '/placeholder.svg';
-
 interface PropertyCardProps {
   id: string | number;
   images: string[];
@@ -17,7 +15,6 @@ interface PropertyCardProps {
   area: number;
   price: string;
 }
-
 const PropertyCard = ({
   id,
   images,
@@ -31,54 +28,31 @@ const PropertyCard = ({
   price
 }: PropertyCardProps) => {
   const navigate = useNavigate();
-  
+
   // Use placeholder if no images
   const displayImages = images && images.length > 0 ? images : [PLACEHOLDER_IMAGE];
-
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = PLACEHOLDER_IMAGE;
   };
-
-  return (
-    <div onClick={() => navigate(`/property/${id}`)} className="card-property group cursor-pointer">
+  return <div onClick={() => navigate(`/property/${id}`)} className="card-property group cursor-pointer">
       {/* Image Carousel */}
       <div className="relative overflow-hidden">
-        {displayImages.length > 1 ? (
-          <Carousel className="w-full">
+        {displayImages.length > 1 ? <Carousel className="w-full">
             <CarouselContent>
-              {displayImages.map((image, index) => (
-                <CarouselItem key={index}>
-                  <AspectRatio ratio={4/3}>
-                    <img 
-                      src={image} 
-                      alt={`${title} - Foto ${index + 1}`} 
-                      className="w-full h-full object-cover"
-                      onError={handleImageError}
-                    />
+              {displayImages.map((image, index) => <CarouselItem key={index}>
+                  <AspectRatio ratio={4 / 3}>
+                    <img src={image} alt={`${title} - Foto ${index + 1}`} className="w-full h-full object-cover" onError={handleImageError} />
                   </AspectRatio>
-                </CarouselItem>
-              ))}
+                </CarouselItem>)}
             </CarouselContent>
             <CarouselPrevious className="left-2" />
             <CarouselNext className="right-2" />
-          </Carousel>
-        ) : (
-          <AspectRatio ratio={4/3}>
-            {displayImages[0] === PLACEHOLDER_IMAGE ? (
-              <div className="w-full h-full bg-muted flex flex-col items-center justify-center text-muted-foreground">
+          </Carousel> : <AspectRatio ratio={4 / 3}>
+            {displayImages[0] === PLACEHOLDER_IMAGE ? <div className="w-full h-full bg-muted flex flex-col items-center justify-center text-muted-foreground">
                 <ImageOff className="w-12 h-12 mb-2" />
                 <span className="text-sm">Sem imagem</span>
-              </div>
-            ) : (
-              <img 
-                src={displayImages[0]} 
-                alt={title} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={handleImageError}
-              />
-            )}
-          </AspectRatio>
-        )}
+              </div> : <img src={displayImages[0]} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onError={handleImageError} />}
+          </AspectRatio>}
         <div className="absolute top-4 left-4 z-10">
           <span className="bg-gradient-accent text-white px-3 py-1 rounded-full text-sm font-medium">
             {type}
@@ -92,7 +66,7 @@ const PropertyCard = ({
       </div>
 
       {/* Content */}
-      <div className="p-6 bg-card shadow-xl border border-border rounded-b-lg">
+      <div className="p-6 shadow-xl border border-border rounded-b-lg bg-[sidebar-accent-foreground] bg-slate-50">
         {/* Location */}
         <div className="flex items-center space-x-2 text-muted-foreground mb-3">
           <MapPin className="w-4 h-4" />
@@ -134,8 +108,6 @@ const PropertyCard = ({
           </button>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default PropertyCard;
