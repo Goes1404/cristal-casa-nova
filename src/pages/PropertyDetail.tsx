@@ -121,7 +121,7 @@ const PropertyDetail = () => {
                   </div>
 
                   <div className="grid grid-cols-4 gap-4 mb-8">
-                    <div className="text-center p-4 rounded-lg bg-[sidebar-primary-foreground] bg-border">
+                    <div className="text-center p-4 rounded-lg bg-[sidebar-primary-foreground] bg-amber-400">
                       <Bed className="w-6 h-6 text-primary mx-auto mb-2" />
                       <div className="font-semibold">{property.bedrooms}</div>
                       <div className="text-sm text-muted-foreground">Quartos</div>
