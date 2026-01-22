@@ -34,8 +34,8 @@ const PropertiesSection = () => {
     'terreno': 'Terreno',
     'comercial': 'Comercial'
   };
-  return <section id="properties" className="py-20 bg-white">
-      <div className="container mx-auto px-4 bg-primary-foreground my-[15px]">
+  return <section id="properties" className="py-20 bg-white dark:bg-background">
+      <div className="container mx-auto px-4 bg-primary-foreground dark:bg-background my-[15px]">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">
