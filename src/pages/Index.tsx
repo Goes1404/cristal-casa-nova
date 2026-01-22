@@ -10,7 +10,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <AboutSection />
-        <PropertiesSection className="bg-primary-foreground" />
+        <PropertiesSection />
         <ContactSection />
       </main>
       <Footer />
