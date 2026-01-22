@@ -55,8 +55,8 @@ const PropertyDetail = () => {
   return <div className="min-h-screen">
       <Header />
       <main className="pt-20">
-        <section className="py-12 bg-secondary">
-          <div className="container mx-auto px-4 bg-secondary">
+        <section className="py-12 bg-muted dark:bg-secondary">
+          <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-crystal-gray hover:text-primary mb-6 transition-colors">
                 <ArrowLeft className="w-5 h-5" />
