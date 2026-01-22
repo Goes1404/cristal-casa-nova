@@ -129,7 +129,7 @@ const PropertyCard = ({
           <div>
             <div className="text-2xl font-bold text-primary">{price}</div>
           </div>
-          <button className="btn-outline hover:scale-105 transition-transform">
+          <button className="border-2 border-primary text-primary bg-transparent px-4 py-2 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 text-sm font-medium">
             Ver Detalhes
           </button>
         </div>
