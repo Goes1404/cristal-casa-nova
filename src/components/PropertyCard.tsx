@@ -127,6 +127,7 @@ const PropertyCard = ({
         {/* Price and Button */}
         <div className="flex items-center justify-between">
           <div>
+            <p className="text-xs text-muted-foreground">a partir de</p>
             <div className="text-2xl font-bold text-primary">{price}</div>
           </div>
           <button className="border-2 border-primary text-primary bg-transparent px-4 py-2 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 text-sm font-medium">

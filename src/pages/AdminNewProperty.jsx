@@ -118,27 +118,27 @@ export default function AdminNewProperty() {
 
         <div>
           <label className="block">Preço</label>
-          <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" className="w-full" />
+          <input value={price} onChange={(e) => setPrice(e.target.value)} type="text" className="w-full" />
         </div>
 
         <div className="grid grid-cols-3 gap-2">
           <div>
             <label className="block">Quartos</label>
-            <input value={bedrooms} onChange={(e) => setBedrooms(e.target.value)} type="number" className="w-full" />
+            <input value={bedrooms} onChange={(e) => setBedrooms(e.target.value)} type="text" className="w-full" />
           </div>
           <div>
             <label className="block">Banheiros</label>
-            <input value={bathrooms} onChange={(e) => setBathrooms(e.target.value)} type="number" className="w-full" />
+            <input value={bathrooms} onChange={(e) => setBathrooms(e.target.value)} type="text" className="w-full" />
           </div>
           <div>
             <label className="block">Vagas</label>
-            <input value={parking} onChange={(e) => setParking(e.target.value)} type="number" className="w-full" />
+            <input value={parking} onChange={(e) => setParking(e.target.value)} type="text" className="w-full" />
           </div>
         </div>
 
         <div>
           <label className="block">Área (m²)</label>
-          <input value={area} onChange={(e) => setArea(e.target.value)} type="number" className="w-full" />
+          <input value={area} onChange={(e) => setArea(e.target.value)} type="text" className="w-full" />
         </div>
 
         <div>
