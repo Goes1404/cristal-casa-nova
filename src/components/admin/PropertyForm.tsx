@@ -332,27 +332,27 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
 
         <div>
           <Label htmlFor="price">Preço (R$)</Label>
-          <Input id="price" {...register('price')} />
+          <Input id="price" type="text" {...register('price')} />
         </div>
 
         <div>
           <Label htmlFor="bedrooms">Quartos</Label>
-          <Input id="bedrooms" {...register('bedrooms')} />
+          <Input id="bedrooms" type="text" {...register('bedrooms')} />
         </div>
 
         <div>
           <Label htmlFor="bathrooms">Banheiros</Label>
-          <Input id="bathrooms" {...register('bathrooms')} />
+          <Input id="bathrooms" type="text" {...register('bathrooms')} />
         </div>
 
         <div>
           <Label htmlFor="parking">Vagas</Label>
-          <Input id="parking" {...register('parking')} />
+          <Input id="parking" type="text" {...register('parking')} />
         </div>
 
         <div>
           <Label htmlFor="area">Área (m²)</Label>
-          <Input id="area" {...register('area')} />
+          <Input id="area" type="text" {...register('area')} />
         </div>
       </div>
 
