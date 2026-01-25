@@ -33,16 +33,33 @@ const PropertyList = ({ onEdit }: PropertyListProps) => {
     if (!confirm('Tem certeza que deseja excluir este imóvel?')) return;
 
     try {
+      // First delete all related images
+      const { error: imagesError } = await supabase
+        .from('property_images')
+        .delete()
+        .eq('property_id', propertyId);
+
+      if (imagesError) {
+        console.error('Erro ao excluir imagens:', imagesError);
+        throw imagesError;
+      }
+
+      // Then delete the property
       const { error } = await supabase
         .from('properties')
         .delete()
         .eq('id', propertyId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erro ao excluir imóvel:', error);
+        throw error;
+      }
+      
       toast.success('Imóvel excluído com sucesso!');
       refetch();
     } catch (error: any) {
-      toast.error('Erro ao excluir imóvel');
+      console.error('Erro na exclusão:', error);
+      toast.error('Erro ao excluir imóvel: ' + (error.message || 'Erro desconhecido'));
     }
   };
 
