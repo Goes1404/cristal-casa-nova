@@ -14,7 +14,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 my-[50px]">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 lg:px-6 lg:py-3 mb-6 lg:mb-10">
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 lg:px-6 lg:py-3 mb-6 lg:mb-10 my-[50px]">
             <Star className="w-4 h-4 lg:w-5 lg:h-5 text-accent fill-current" />
             <span className="text-sm sm:text-base lg:text-lg text-white/90 font-medium">Corretora de Confiança</span>
           </div>
