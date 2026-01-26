@@ -65,14 +65,19 @@ export type Database = {
       properties: {
         Row: {
           area: number
+          area_text: string | null
           bathrooms: number
+          bathrooms_text: string | null
           bedrooms: number
+          bedrooms_text: string | null
           created_at: string
           description: string | null
           id: string
           location: string
           parking: number
+          parking_text: string | null
           price: number
+          price_text: string | null
           status: Database["public"]["Enums"]["property_status"]
           title: string
           type: Database["public"]["Enums"]["property_type"]
@@ -81,14 +86,19 @@ export type Database = {
         }
         Insert: {
           area: number
+          area_text?: string | null
           bathrooms: number
+          bathrooms_text?: string | null
           bedrooms: number
+          bedrooms_text?: string | null
           created_at?: string
           description?: string | null
           id?: string
           location: string
           parking: number
+          parking_text?: string | null
           price: number
+          price_text?: string | null
           status?: Database["public"]["Enums"]["property_status"]
           title: string
           type: Database["public"]["Enums"]["property_type"]
@@ -97,14 +107,19 @@ export type Database = {
         }
         Update: {
           area?: number
+          area_text?: string | null
           bathrooms?: number
+          bathrooms_text?: string | null
           bedrooms?: number
+          bedrooms_text?: string | null
           created_at?: string
           description?: string | null
           id?: string
           location?: string
           parking?: number
+          parking_text?: string | null
           price?: number
+          price_text?: string | null
           status?: Database["public"]["Enums"]["property_status"]
           title?: string
           type?: Database["public"]["Enums"]["property_type"]

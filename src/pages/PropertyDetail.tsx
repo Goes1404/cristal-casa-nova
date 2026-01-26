@@ -113,7 +113,7 @@ const PropertyDetail = () => {
 
                   <div className="mb-8">
                     <div className="text-3xl font-bold text-primary mb-1">
-                      {formatCurrency(Number(property.price))}
+                      {property.price_text || formatCurrency(Number(property.price))}
                     </div>
                     <div className="text-sm text-muted-foreground">
                       {formatCurrencyFull(Number(property.price))}
@@ -123,22 +123,22 @@ const PropertyDetail = () => {
                   <div className="grid grid-cols-4 gap-4 mb-8">
                     <div className="text-center p-4 rounded-lg bg-[sidebar-primary-foreground] bg-amber-400">
                       <Bed className="w-6 h-6 text-primary mx-auto mb-2" />
-                      <div className="font-semibold">{property.bedrooms}</div>
+                      <div className="font-semibold">{property.bedrooms_text || property.bedrooms}</div>
                       <div className="text-sm text-muted-foreground">Quartos</div>
                     </div>
                     <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Bath className="w-6 h-6 text-primary mx-auto mb-2" />
-                      <div className="font-semibold">{property.bathrooms}</div>
+                      <div className="font-semibold">{property.bathrooms_text || property.bathrooms}</div>
                       <div className="text-sm text-muted-foreground">Banheiros</div>
                     </div>
                     <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Car className="w-6 h-6 text-primary mx-auto mb-2" />
-                      <div className="font-semibold">{property.parking}</div>
+                      <div className="font-semibold">{property.parking_text || property.parking}</div>
                       <div className="text-sm text-muted-foreground">Vagas</div>
                     </div>
                     <div className="text-center p-4 rounded-lg bg-amber-400">
                       <Maximize className="w-6 h-6 text-primary mx-auto mb-2" />
-                      <div className="font-semibold">{property.area}</div>
+                      <div className="font-semibold">{property.area_text || property.area}</div>
                       <div className="text-sm text-muted-foreground">m²</div>
                     </div>
                   </div>

@@ -11,10 +11,10 @@ interface PropertyCardProps {
   type: string;
   title: string;
   location: string;
-  bedrooms: number;
-  bathrooms: number;
-  parking: number;
-  area: number;
+  bedrooms: number | string;
+  bathrooms: number | string;
+  parking: number | string;
+  area: number | string;
   price: string;
 }
 
