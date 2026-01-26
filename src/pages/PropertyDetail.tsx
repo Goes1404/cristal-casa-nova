@@ -151,7 +151,14 @@ const PropertyDetail = () => {
                     </div>}
 
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <a href="https://wa.me/5511996188216" target="_blank" rel="noopener noreferrer" className="btn-hero flex items-center justify-center gap-2">
+                    <a 
+                      href={`https://wa.me/5511996188216?text=${encodeURIComponent(
+                        `Olá! Vi no site e tenho interesse no imóvel: ${property.title} (Código: ${property.id}), no valor de ${property.price_text || formatCurrency(Number(property.price))}. Pode me ajudar?`
+                      )}`}
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="btn-hero flex items-center justify-center gap-2"
+                    >
                       <MessageCircle className="w-5 h-5" />
                       WhatsApp
                     </a>

@@ -1,4 +1,4 @@
-import { Bed, Bath, Car, Square, MapPin, Eye, ImageOff } from 'lucide-react';
+import { Bed, Bath, Car, Square, MapPin, MessageCircle, ImageOff } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { useNavigate } from 'react-router-dom';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
@@ -85,9 +85,17 @@ const PropertyCard = ({
           </span>
         </div>
         <div className="absolute top-4 right-4 z-10">
-          <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-            <Eye className="w-5 h-5" />
-          </button>
+          <a 
+            href={`https://wa.me/5511996188216?text=${encodeURIComponent(
+              `Olá! Vi no site e tenho interesse no imóvel: ${title} (Código: ${id}), no valor de ${price}. Pode me ajudar?`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="w-10 h-10 bg-green-500/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-green-600 transition-colors"
+          >
+            <MessageCircle className="w-5 h-5" />
+          </a>
         </div>
       </div>
 
