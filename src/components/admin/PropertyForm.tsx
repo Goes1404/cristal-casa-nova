@@ -21,7 +21,13 @@ const propertySchema = z.object({
   bedrooms: z.string().optional(),
   bathrooms: z.string().optional(),
   parking: z.string().optional(),
-  area: z.string().optional()
+  area: z.string().optional(),
+  // Text fields for descriptive values like "1 à 3"
+  price_text: z.string().optional(),
+  bedrooms_text: z.string().optional(),
+  bathrooms_text: z.string().optional(),
+  parking_text: z.string().optional(),
+  area_text: z.string().optional()
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -76,11 +82,12 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         setValue('description', property.description || '');
         setValue('type', property.type);
         setValue('location', property.location || '');
-        setValue('price', property.price?.toString() || '');
-        setValue('bedrooms', property.bedrooms?.toString() || '');
-        setValue('bathrooms', property.bathrooms?.toString() || '');
-        setValue('parking', property.parking?.toString() || '');
-        setValue('area', property.area?.toString() || '');
+        // Use text fields if available, otherwise fallback to numeric
+        setValue('price', property.price_text || property.price?.toString() || '');
+        setValue('bedrooms', property.bedrooms_text || property.bedrooms?.toString() || '');
+        setValue('bathrooms', property.bathrooms_text || property.bathrooms?.toString() || '');
+        setValue('parking', property.parking_text || property.parking?.toString() || '');
+        setValue('area', property.area_text || property.area?.toString() || '');
 
         // Set existing images sorted by display_order
         const sortedImages = [...(property.property_images || [])]
@@ -218,11 +225,18 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         description: data.description || null,
         type: data.type || 'apartamento',
         location: data.location || '',
+        // Store both numeric (for filtering) and text (for display)
         price: parseNumber(data.price),
         bedrooms: Math.floor(parseNumber(data.bedrooms)),
         bathrooms: Math.floor(parseNumber(data.bathrooms)),
         parking: Math.floor(parseNumber(data.parking)),
         area: parseNumber(data.area),
+        // Store original text values like "1 à 3"
+        price_text: data.price || null,
+        bedrooms_text: data.bedrooms || null,
+        bathrooms_text: data.bathrooms || null,
+        parking_text: data.parking || null,
+        area_text: data.area || null,
         user_id: user.id
       };
 
