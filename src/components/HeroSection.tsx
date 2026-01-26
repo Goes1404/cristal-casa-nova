@@ -11,12 +11,12 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/70 to-primary/50 dark:from-background/80 dark:to-background/60" />
       
       {/* Content */}
-      <div className="container mx-auto px-4 text-center relative z-10 my-[50px]">
-        <div className="max-w-4xl mx-auto">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 my-[50px]">
+        <div className="max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8">
-            <Star className="w-4 h-4 text-accent fill-current" />
-            <span className="text-white/90 font-medium">Corretora de Confiança</span>
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 lg:px-6 lg:py-3 mb-6 lg:mb-10">
+            <Star className="w-4 h-4 lg:w-5 lg:h-5 text-accent fill-current" />
+            <span className="text-sm sm:text-base lg:text-lg text-white/90 font-medium">Corretora de Confiança</span>
           </div>
 
           {/* Main Heading */}
@@ -34,38 +34,38 @@ const HeroSection = () => {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
             <button onClick={() => document.getElementById('properties')?.scrollIntoView({
             behavior: 'smooth'
-          })} className="btn-hero inline-flex items-center space-x-2">
+          })} className="btn-hero inline-flex items-center space-x-2 lg:text-lg lg:px-10 lg:py-5">
               <span>Ver Imóveis em Destaque</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 lg:w-6 lg:h-6" />
             </button>
             
             <button onClick={() => document.getElementById('contact')?.scrollIntoView({
             behavior: 'smooth'
-          })} className="btn-outline text-white border-white hover:bg-white hover:text-primary">
+          })} className="btn-outline text-white border-white hover:bg-white hover:text-primary lg:text-lg lg:px-8 lg:py-4">
               Fale Conosco
             </button>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-12 mt-12 md:mt-16 pt-12 md:pt-16 border-t border-white/20">
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">100+</div>
-              <div className="text-white/80">Imóveis Vendidos</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">100+</div>
+              <div className="text-sm sm:text-base lg:text-lg text-white/80">Imóveis Vendidos</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">7+</div>
-              <div className="text-white/80">Anos de Experiência</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">7+</div>
+              <div className="text-sm sm:text-base lg:text-lg text-white/80">Anos de Experiência</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">98%</div>
-              <div className="text-white/80">Clientes Satisfeitos</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">98%</div>
+              <div className="text-sm sm:text-base lg:text-lg text-white/80">Clientes Satisfeitos</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-white mb-2">24h</div>
-              <div className="text-white/80">Atendimento</div>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">24h</div>
+              <div className="text-sm sm:text-base lg:text-lg text-white/80">Atendimento</div>
             </div>
           </div>
         </div>
