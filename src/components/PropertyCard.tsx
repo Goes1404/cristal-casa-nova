@@ -92,45 +92,45 @@ const PropertyCard = ({
       </div>
 
       {/* Content */}
-      <div className="p-6 bg-card shadow-xl border border-border rounded-b-lg">
+      <div className="p-4 sm:p-5 lg:p-6 bg-card shadow-xl border border-border rounded-b-lg">
         {/* Location */}
-        <div className="flex items-center space-x-2 text-muted-foreground mb-3">
-          <MapPin className="w-4 h-4" />
-          <span className="text-sm">{location}</span>
+        <div className="flex items-center space-x-2 text-muted-foreground mb-2 lg:mb-3">
+          <MapPin className="w-4 h-4 lg:w-5 lg:h-5" />
+          <span className="text-sm lg:text-base">{location}</span>
         </div>
 
         {/* Title */}
-        <h3 className="font-heading font-semibold text-xl text-primary mb-4 line-clamp-2">
+        <h3 className="font-heading font-semibold text-lg sm:text-xl lg:text-2xl text-primary mb-3 lg:mb-4 line-clamp-2">
           {title}
         </h3>
 
         {/* Features */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4 mb-4 lg:mb-6">
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <Bed className="w-4 h-4" />
-            <span className="text-sm">{bedrooms} quartos</span>
+            <Bed className="w-4 h-4 lg:w-5 lg:h-5" />
+            <span className="text-sm lg:text-base">{bedrooms} quartos</span>
           </div>
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <Bath className="w-4 h-4" />
-            <span className="text-sm">{bathrooms} banheiros</span>
+            <Bath className="w-4 h-4 lg:w-5 lg:h-5" />
+            <span className="text-sm lg:text-base">{bathrooms} banheiros</span>
           </div>
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <Car className="w-4 h-4" />
-            <span className="text-sm">{parking} vagas</span>
+            <Car className="w-4 h-4 lg:w-5 lg:h-5" />
+            <span className="text-sm lg:text-base">{parking} vagas</span>
           </div>
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <Square className="w-4 h-4" />
-            <span className="text-sm">{area}m²</span>
+            <Square className="w-4 h-4 lg:w-5 lg:h-5" />
+            <span className="text-sm lg:text-base">{area}m²</span>
           </div>
         </div>
 
         {/* Price and Button */}
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs text-muted-foreground">a partir de</p>
-            <div className="text-2xl font-bold text-primary">{price}</div>
+            <p className="text-xs lg:text-sm text-muted-foreground">a partir de</p>
+            <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-primary">{price}</div>
           </div>
-          <button className="border-2 border-primary text-primary bg-transparent px-4 py-2 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 text-sm font-medium">
+          <button className="border-2 border-primary text-primary bg-transparent px-3 sm:px-4 lg:px-5 py-2 lg:py-2.5 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 text-sm lg:text-base font-medium">
             Ver Detalhes
           </button>
         </div>
