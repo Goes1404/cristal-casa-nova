@@ -11,6 +11,7 @@ interface PropertyCardProps {
   type: string;
   title: string;
   location: string;
+  neighborhood?: string;
   bedrooms: number | string;
   bathrooms: number | string;
   parking: number | string;
@@ -24,6 +25,7 @@ const PropertyCard = ({
   type,
   title,
   location,
+  neighborhood,
   bedrooms,
   bathrooms,
   parking,
@@ -104,7 +106,7 @@ const PropertyCard = ({
         {/* Location */}
         <div className="flex items-center space-x-2 text-muted-foreground mb-2 lg:mb-3">
           <MapPin className="w-4 h-4 lg:w-5 lg:h-5" />
-          <span className="text-sm lg:text-base">{location}</span>
+          <span className="text-sm lg:text-base">{location}{neighborhood ? `, ${neighborhood}` : ''}</span>
         </div>
 
         {/* Title */}

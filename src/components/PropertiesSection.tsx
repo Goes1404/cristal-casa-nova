@@ -52,7 +52,7 @@ const PropertiesSection = () => {
             </div> : properties && properties.length > 0 ? <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
               {properties.map(property => {
             const sortedImages = [...property.property_images].sort((a, b) => (a.display_order || 0) - (b.display_order || 0)).map(img => img.image_url);
-            return <PropertyCard key={property.id} id={property.id} images={sortedImages} type={typeMap[property.type] || property.type} title={property.title} location={property.location} bedrooms={property.bedrooms_text || property.bedrooms} bathrooms={property.bathrooms_text || property.bathrooms} parking={property.parking_text || property.parking} area={property.area_text || property.area} price={property.price_text || formatCurrency(Number(property.price))} />;
+            return <PropertyCard key={property.id} id={property.id} images={sortedImages} type={typeMap[property.type] || property.type} title={property.title} location={property.location} neighborhood={(property as any).neighborhood} bedrooms={property.bedrooms_text || property.bedrooms} bathrooms={property.bathrooms_text || property.bathrooms} parking={property.parking_text || property.parking} area={property.area_text || property.area} price={property.price_text || formatCurrency(Number(property.price))} />;
           })}
             </div> : <div className="text-center py-12 text-muted-foreground">
               <p>Nenhum imóvel disponível no momento.</p>
