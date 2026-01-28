@@ -74,6 +74,7 @@ export type Database = {
           description: string | null
           id: string
           location: string
+          neighborhood: string | null
           parking: number
           parking_text: string | null
           price: number
@@ -95,6 +96,7 @@ export type Database = {
           description?: string | null
           id?: string
           location: string
+          neighborhood?: string | null
           parking: number
           parking_text?: string | null
           price: number
@@ -116,6 +118,7 @@ export type Database = {
           description?: string | null
           id?: string
           location?: string
+          neighborhood?: string | null
           parking?: number
           parking_text?: string | null
           price?: number

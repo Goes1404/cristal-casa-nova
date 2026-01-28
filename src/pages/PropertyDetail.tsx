@@ -108,7 +108,7 @@ const PropertyDetail = () => {
 
                   <div className="flex items-center text-muted-foreground mb-6">
                     <MapPin className="w-5 h-5 mr-2" />
-                    <span>{property.location}</span>
+                    <span>{property.location}{(property as any).neighborhood ? `, ${(property as any).neighborhood}` : ''}</span>
                   </div>
 
                   <div className="mb-8">

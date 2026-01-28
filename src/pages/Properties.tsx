@@ -201,7 +201,7 @@ const Properties = () => {
                         .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
                         .map(img => img.image_url);
                       
-                        return (
+                          return (
                           <PropertyCard
                             key={property.id}
                             id={property.id}
@@ -209,6 +209,7 @@ const Properties = () => {
                             type={typeMap[property.type] || property.type}
                             title={property.title}
                             location={property.location}
+                            neighborhood={(property as any).neighborhood}
                             bedrooms={property.bedrooms_text || property.bedrooms}
                             bathrooms={property.bathrooms_text || property.bathrooms}
                             parking={property.parking_text || property.parking}

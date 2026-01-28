@@ -16,7 +16,8 @@ const propertySchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   type: z.enum(['apartamento', 'casa', 'cobertura', 'terreno', 'comercial']).optional(),
-  location: z.string().optional(),
+  location: z.string().optional(), // City
+  neighborhood: z.string().optional(), // Neighborhood/Bairro
   price: z.string().optional(),
   bedrooms: z.string().optional(),
   bathrooms: z.string().optional(),
@@ -82,6 +83,7 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         setValue('description', property.description || '');
         setValue('type', property.type);
         setValue('location', property.location || '');
+        setValue('neighborhood', (property as any).neighborhood || '');
         // Use text fields if available, otherwise fallback to numeric
         setValue('price', property.price_text || property.price?.toString() || '');
         setValue('bedrooms', property.bedrooms_text || property.bedrooms?.toString() || '');
@@ -224,7 +226,8 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         title: data.title || '',
         description: data.description || null,
         type: data.type || 'apartamento',
-        location: data.location || '',
+        location: data.location || '', // City
+        neighborhood: data.neighborhood || null, // Bairro
         // Store both numeric (for filtering) and text (for display)
         price: parseNumber(data.price),
         bedrooms: Math.floor(parseNumber(data.bedrooms)),
@@ -340,8 +343,13 @@ const PropertyForm = ({ propertyId, onSuccess }: PropertyFormProps) => {
         </div>
 
         <div>
-          <Label htmlFor="location">Localização</Label>
-          <Input id="location" {...register('location')} />
+          <Label htmlFor="location">Cidade</Label>
+          <Input id="location" placeholder="Ex: Barueri" {...register('location')} />
+        </div>
+
+        <div>
+          <Label htmlFor="neighborhood">Bairro</Label>
+          <Input id="neighborhood" placeholder="Ex: Jardim Esperança" {...register('neighborhood')} />
         </div>
 
         <div>
